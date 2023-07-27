@@ -12,9 +12,9 @@ const config = {
   entry: ['./tools/index.ts'],
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: devMode ? 'hsu-tools.js' : 'hsu-tools.min.js',
+    filename: devMode ? 'hsu-uilts.js' : 'hsu-uilts.min.js',
     globalObject: 'this',
-    library: 'hsu-tools',
+    library: 'hsu-uilts',
     libraryTarget: 'umd'
   },
   module: {
@@ -35,7 +35,7 @@ const config = {
   },
   plugins: [
     new webpack.BannerPlugin(
-      `\nhsu-tools v${pkg.version} \n\n${pkg.description} \n\n${fs.readFileSync(path.join(process.cwd(), 'LICENSE'))}`
+      `\nhsu-uilts v${pkg.version} \n\n${pkg.description} \n\n${fs.readFileSync(path.join(process.cwd(), 'LICENSE'))}`
     ),
   ],
   optimization: {
