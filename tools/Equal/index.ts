@@ -1,4 +1,4 @@
-import { Typeof } from '..'
+import Typeof from '../Typeof'
 
 /**
  * 判断类型相等
