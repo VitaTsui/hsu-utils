@@ -1,13 +1,13 @@
 {
-  "name": "hsu-uilts",
-  "version": "0.0.3",
+  "name": "hsu-utils",
+  "version": "0.0.0",
   "description": "some front-end uilts",
-  "repository": "git@github.com:VitaTsui/hsu-uilts.git",
+  "repository": "git@github.com:VitaTsui/hsu-utils.git",
   "author": "VitaHsu <vitahsu7@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "unpkg": "dist/hsu-uilts.min.js",
+  "unpkg": "dist/hsu-utils.min.js",
   "files": [
     "es",
     "lib",
