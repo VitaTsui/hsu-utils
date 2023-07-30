@@ -93,7 +93,7 @@ function get_max_widths(data: ConsoleData): number[] {
 }
 
 // 打印表格通用方法
-export function console_table(data: ConsoleData, callBack?: (str: string) => void) {
+export default function console_table(data: ConsoleData, callBack?: (str: string) => void) {
   const row_num = data.length
   const max_widths = get_max_widths(data)
 
