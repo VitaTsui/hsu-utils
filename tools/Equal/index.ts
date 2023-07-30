@@ -1,4 +1,4 @@
-import Typeof from '../Typeof'
+import { Typeof } from '../Typeof'
 
 /**
  * 判断类型相等
@@ -83,6 +83,3 @@ export function ObjEqual<T = object>(obj1: T, obj2: T): boolean {
 
   return isEqual
 }
-
-const Equal = { ObjEqual, ValEqual, TypeEqual }
-export default Equal

@@ -1,4 +1,4 @@
-import Typeof from '../Typeof'
+import { Typeof } from '../Typeof'
 
 type CommonObj<T = unknown> = Record<string, T>
 
@@ -7,7 +7,7 @@ type CommonObj<T = unknown> = Record<string, T>
  * @param data
  * @returns
  */
-export default function deepCopy<T = unknown>(data: T): T {
+export function deepCopy<T = unknown>(data: T): T {
   if (Typeof(data) === 'date') {
     return new Date((data as Date).toISOString()) as T
 

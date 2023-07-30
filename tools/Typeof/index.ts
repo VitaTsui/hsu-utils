@@ -13,7 +13,7 @@ type Type =
   | 'formdata'
   | string
 
-export default function Typeof(value: any): Type {
+export function Typeof(value: any): Type {
   const object_type: string = Object.prototype.toString.call(value)
 
   const reg = new RegExp(' (.+?)]')
