@@ -1,7 +1,3 @@
-/**
- * 参考 https://blog.csdn.net/qq_45193304/article/details/126854872
- */
-
 export type ConsoleData = Array<Array<string | number>>
 
 const NODE = '+'
