@@ -1,4 +1,4 @@
-import { Typeof } from '..'
+import { Typeof, deepCopy } from '..'
 
 /**
  * 判断类型相等
@@ -51,33 +51,35 @@ export function ValEqual<T = unknown>(obj1: T, obj2: T): boolean {
  */
 export function ObjEqual<T = object>(obj1: T, obj2: T): boolean {
   let isEqual = false
+  let _obj1 = deepCopy(obj1)
+  let _obj2 = deepCopy(obj2)
 
-  if (obj1 !== null && obj2 !== null) {
-    if (Array.isArray(obj1) && Array.isArray(obj2)) {
-      obj1.sort()
-      obj2.sort()
+  if (_obj1 !== null && _obj2 !== null) {
+    if (Array.isArray(_obj1) && Array.isArray(_obj2)) {
+      _obj1.sort()
+      _obj2.sort()
 
-      if (obj1.length !== obj2.length) {
+      if (_obj1.length !== _obj2.length) {
         isEqual = false
       } else {
-        for (let i = 0; i < obj1.length; i++) {
-          isEqual = ValEqual(obj1[i], obj2[i])
+        for (let i = 0; i < _obj1.length; i++) {
+          isEqual = ValEqual(_obj1[i], _obj2[i])
 
           if (!isEqual) break
         }
       }
-    } else if (typeof obj1 === 'object' && typeof obj2 === 'object') {
-      if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+    } else if (typeof _obj1 === 'object' && typeof _obj2 === 'object') {
+      if (Object.keys(_obj1).length !== Object.keys(_obj2).length) {
         isEqual = false
       } else {
-        for (const key in obj1) {
-          isEqual = ValEqual(obj1[key], obj2[key])
+        for (const key in _obj1) {
+          isEqual = ValEqual(_obj1[key], _obj2[key])
 
           if (!isEqual) break
         }
       }
     }
-  } else if (obj1 === null && obj2 === null) {
+  } else if (_obj1 === null && _obj2 === null) {
     isEqual = true
   }
 
