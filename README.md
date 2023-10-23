@@ -21,4 +21,8 @@ yarn add hsu-utils
   > `ValEqual` 判断值相等，`TypeEqual` 判断类型相同，`ObjEqual` 判断对象相等
 
 - `Typeof` 获取类型
+
   > `number`、`string`、`boolean`、`object`、`array`、`null`、`undefined`、`unknown`、`function`、`symbol`、`date`、`formdata`
+
+- `get_string_width` 获取字符串长度
+  > 中文字符计算为`1`，英文字符计算为`0.5`
