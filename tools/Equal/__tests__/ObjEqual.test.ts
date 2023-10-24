@@ -60,12 +60,18 @@ describe('ObjEqual', () => {
   test(`Obj ${_toString({ '1': ['2', { '2': 1 }] })} === Obj ${_toString({ '1': ['2'] })}`, () => {
     expect(Equal.ObjEqual({ '1': ['2', { '2': 1 }] }, { '1': ['2'] })).toBe(false)
   })
+  test(`Obj {} === Obj {}`, () => {
+    expect(Equal.ObjEqual({}, {})).toBe(true)
+  })
 
   test(`Obj ${_toString(['2', { '2': 1 }])} !== Obj ${_toString(['2', { '1': 1 }])}`, () => {
     expect(Equal.ObjEqual(['2', { '2': 1 }], ['2', { '1': 1 }])).toBe(false)
   })
   test(`Obj ${_toString(['2', { '2': ['2', { '2': 1 }] }])} !== Obj ${_toString(['2', { '1': 1 }])}`, () => {
     expect(Equal.ObjEqual(['2', { '2': ['2', { '2': 1 }] }], ['2', { '1': 1 }])).toBe(false)
+  })
+  test(`Obj [] === Obj []`, () => {
+    expect(Equal.ObjEqual([], [])).toBe(true)
   })
 
   test(`Obj null === Obj null}`, () => {

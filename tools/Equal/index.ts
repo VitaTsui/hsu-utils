@@ -62,6 +62,8 @@ export function ObjEqual<T = object>(obj1: T, obj2: T): boolean {
       if (_obj1.length !== _obj2.length) {
         isEqual = false
       } else {
+        isEqual = true
+
         for (let i = 0; i < _obj1.length; i++) {
           isEqual = ValEqual(_obj1[i], _obj2[i])
 
@@ -72,6 +74,8 @@ export function ObjEqual<T = object>(obj1: T, obj2: T): boolean {
       if (Object.keys(_obj1).length !== Object.keys(_obj2).length) {
         isEqual = false
       } else {
+        isEqual = true
+
         for (const key in _obj1) {
           isEqual = ValEqual(_obj1[key], _obj2[key])
 
