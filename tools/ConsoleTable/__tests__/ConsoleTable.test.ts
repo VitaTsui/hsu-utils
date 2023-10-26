@@ -1,40 +1,16 @@
 import { describe, expect, test } from '@jest/globals'
-import { ConsoleData, console_table } from '../..'
+import { ConvertNumbers } from '../..'
 
-describe('console_table', () => {
-  test(`+-----+--------+\n|     | BUCKET |\n+-----+--------+\n| CPU |   9520 |\n+-----+--------+`, () => {
-    const data: ConsoleData = [
-      ['', 'BUCKET'],
-      ['CPU', 9520]
-    ]
-    let log = ''
-    console_table(data, (_log) => (log = _log))
-
-    const res = `+-----+--------+\n|     | BUCKET |\n+-----+--------+\n| CPU |   9520 |\n+-----+--------+`
-
-    expect(log === res).toBe(true)
-  })
-
-  test(`+------+--------+\n| 系统 | BUCKET |\n+------+--------+\n| CPU  |   8059 |\n+------+--------+`, () => {
-    const data: ConsoleData = [
-      ['系统', 'BUCKET'],
-      ['CPU', 9520]
-    ]
-    let log = ''
-    console_table(data, (_log) => (log = _log))
-
-    const res = `+------+--------+\n| 系统 | BUCKET |\n+------+--------+\n| CPU  |   9520 |\n+------+--------+`
-
-    expect(log === res).toBe(true)
-  })
-
-  test(`+------+--------+\n| 系统 | BUCKET |\n+------+--------+\n|      |        |\n+------+--------+`, () => {
-    const data: ConsoleData = [['系统', 'BUCKET'], []]
-    let log = ''
-    console_table(data, (_log) => (log = _log))
-
-    const res = `+------+--------+\n| 系统 | BUCKET |\n+------+--------+\n|      |        |\n+------+--------+`
-
-    expect(log === res).toBe(true)
+describe('ConvertNumbers', () => {
+  test(`toChineseNum`, () => {
+    expect(ConvertNumbers.toChineseNum(0)).toBe('零')
+    expect(ConvertNumbers.toChineseNum(1)).toBe('一')
+    expect(ConvertNumbers.toChineseNum(1, { benchmark: 100 })).toBe('一百')
+    expect(ConvertNumbers.toChineseNum(999999999999999, { benchmark: 100 })).toBe('超出转换范围')
+    expect(ConvertNumbers.toChineseNum(1.01, { benchmark: 100 })).toBe('一百零一')
+    expect(ConvertNumbers.toChineseNum(1.01)).toBe('一点零一')
+    expect(ConvertNumbers.toChineseNum(1.011)).toBe('一点零一一')
+    expect(ConvertNumbers.toChineseNum(10100)).toBe('一万零一百')
+    expect(ConvertNumbers.toChineseNum(10100.011, { textType: 'uppercase' })).toBe('壹万零壹佰点零壹壹')
   })
 })
