@@ -25,4 +25,6 @@ yarn add hsu-utils
   > `number`、`string`、`boolean`、`object`、`array`、`null`、`undefined`、`unknown`、`function`、`symbol`、`date`、`formdata`
 
 - `get_string_width` 获取字符串长度
-  > 中文字符计算为`1`，英文字符计算为`0.5`
+  > 根据字体属性进行计算，默认 size 为 12，family 为 微软雅黑
+- `loadImage` 异步加载图片
+  > 确保相同的图片只加载一次

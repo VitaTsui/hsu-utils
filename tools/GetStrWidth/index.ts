@@ -14,7 +14,7 @@ export default function get_string_width(str: string, font: Font = {}): number {
     weight = 'normal',
     size = 12,
     lineHeight = 1,
-    family: fontFamily = '微软雅黑, "Microsoft YaHei", -apple-system'
+    family: fontFamily = '微软雅黑'
   } = font
 
   const canvas = document.createElement('canvas')
