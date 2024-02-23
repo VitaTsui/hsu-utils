@@ -1,6 +1,6 @@
 {
   "name": "hsu-utils",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "some front-end utils",
   "repository": "git@github.com:VitaTsui/hsu-utils.git",
   "author": "VitaHsu <vitahsu7@gmail.com>",
@@ -32,7 +32,8 @@
     "test": "jest",
     "publish:patch": "yarn build && yarn publish --new-version patch",
     "publish:minor": "yarn build && yarn publish --new-version minor",
-    "publish:major": "yarn build && yarn publish --new-version major"
+    "publish:major": "yarn build && yarn publish --new-version major",
+    "publish:alpha": "yarn build && yarn publish --tag alpha"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
@@ -40,6 +41,7 @@
     "@types/jest": "^29.5.2",
     "cross-env": "^7.0.3",
     "jest": "^29.5.0",
+    "jest-canvas-mock": "^2.5.2",
     "jest-environment-jsdom": "^29.5.0",
     "jsdom": "^22.1.0",
     "rimraf": "^5.0.1",
