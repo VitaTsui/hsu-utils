@@ -1,24 +1,25 @@
-type Type =
-  | 'number'
-  | 'string'
-  | 'boolean'
-  | 'object'
-  | 'array'
-  | 'null'
-  | 'undefined'
-  | 'unknown'
-  | 'function'
-  | 'symbol'
-  | 'date'
-  | 'formdata'
-  | string
+type BaseType = 'string' | 'number' | 'boolean' | 'undefined' | 'function' | 'symbol' | 'bigint'
 
-export default function Typeof(value: any): Type {
+type ObjectType = 'object' | 'array' | 'null' | 'date' | 'formdata' | 'set' | 'map' | 'regexp'
+
+type Type = BaseType | ObjectType
+
+export default function Typeof<T>(value: T, isType?: Type): boolean | Type {
   const object_type: string = Object.prototype.toString.call(value)
-
   const reg = new RegExp(' (.+?)]')
+  const type = (object_type.match(reg) as RegExpMatchArray)[1].toLowerCase()
 
-  const type = (object_type.match(reg) as RegExpMatchArray)[1]
+  if (!isType) {
+    return type as Type
+  }
 
-  return type.toLowerCase() as Type
+  let isTypeEqual = false
+
+  if (typeof value !== 'object') {
+    isTypeEqual = typeof value === isType
+  } else {
+    isTypeEqual = type === isType
+  }
+
+  return isTypeEqual
 }
