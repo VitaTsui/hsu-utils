@@ -66,4 +66,26 @@ describe('deepCopy', () => {
     expect(data === _data).toBe(true)
     expect(data === res).toBe(false)
   })
+
+  test(`{ '1': Map }`, () => {
+    const map = new Map()
+    map.set('1', '1')
+    const data = { '1': map }
+    const _data = data
+    const res = deepCopy(data)
+    expect(deepCopy(data)).toEqual(data)
+    expect(data === _data).toBe(true)
+    expect(data === res).toBe(false)
+  })
+
+  test(`{ '1': Set }`, () => {
+    const set = new Set()
+    set.add('1')
+    const data = { '1': set }
+    const _data = data
+    const res = deepCopy(data)
+    expect(deepCopy(data)).toEqual(data)
+    expect(data === _data).toBe(true)
+    expect(data === res).toBe(false)
+  })
 })
