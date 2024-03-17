@@ -1,4 +1,4 @@
-function downloadFileByLocalPath(path: string, fileName?: string): void {
+function downloadFileByLocalPath(path: string, fileName: string): void {
   fetch(path)
     .then((response) => response.arrayBuffer())
     .then((arrayBuffer) => {
@@ -6,7 +6,7 @@ function downloadFileByLocalPath(path: string, fileName?: string): void {
     })
 }
 
-function downloadFileByUrl(url: string, fileName?: string): void {
+function downloadFileByUrl(url: string, fileName: string): void {
   if (!url.startsWith('http')) {
     downloadFileByLocalPath(url, fileName)
     return
@@ -20,9 +20,9 @@ function downloadFileByUrl(url: string, fileName?: string): void {
   document.body.removeChild(downloadElement)
 }
 
-export default function downloadFile(file: ArrayBuffer | string, fileName?: string): void {
+export default function downloadFile(file: ArrayBuffer | string, fileName: string): void {
   if (typeof file === 'string') {
-    downloadFileByUrl(file)
+    downloadFileByUrl(file, fileName)
     return
   }
 
