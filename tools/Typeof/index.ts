@@ -13,13 +13,9 @@ export default function Typeof<T>(value: T, isType?: Type): boolean | Type {
     return type as Type
   }
 
-  let isTypeEqual = false
-
   if (typeof value !== 'object') {
-    isTypeEqual = typeof value === isType
+    return typeof value === isType
   } else {
-    isTypeEqual = type === isType
+    return type === isType
   }
-
-  return isTypeEqual
 }
