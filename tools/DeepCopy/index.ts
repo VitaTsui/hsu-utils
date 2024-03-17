@@ -1,18 +1,18 @@
 import { Typeof } from '..'
 
-type CommonObj<T = unknown> = Record<string, T>
+type CommonObj<T = any> = Record<string, T>
 
 /**
  * 深拷贝
  * @param data
  * @returns
  */
-export default function deepCopy<T = unknown>(data: T): T {
+export default function deepCopy<T = any>(data: T): T {
   if (Typeof(data) === 'date') {
     return new Date((data as Date).toISOString()) as T
+  }
 
-    // FormData
-  } else if (Typeof(data) === 'formdata') {
+  if (Typeof(data) === 'formdata') {
     const _data = data as FormData
     const _formData = new FormData()
 
@@ -21,9 +21,31 @@ export default function deepCopy<T = unknown>(data: T): T {
     })
 
     return _formData as T
+  }
 
-    // 数组
-  } else if (Array.isArray(data)) {
+  if (Typeof(data) === 'map') {
+    const _data = data as Map<any, any>
+    const map = new Map()
+
+    _data.forEach((value, key) => {
+      map.set(key, value)
+    })
+
+    return map as T
+  }
+
+  if (Typeof(data) === 'set') {
+    const _data = data as Set<any>
+    const set = new Set()
+
+    _data.forEach((value) => {
+      set.add(value)
+    })
+
+    return set as T
+  }
+
+  if (Array.isArray(data)) {
     const newData = data.map((item) => {
       if (typeof item === 'object') {
         return deepCopy(item) // 数组 | 对象

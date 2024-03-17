@@ -7,5 +7,6 @@ export default {
     '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest'
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
-  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node']
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/DownloadFile/', '/GetStrWidth/', '/LoadImage/', '/RenderPDF/']
 }

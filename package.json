@@ -1,6 +1,6 @@
 {
   "name": "hsu-utils",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "some front-end utils",
   "repository": "git@github.com:VitaTsui/hsu-utils.git",
   "author": "VitaHsu <vitahsu7@gmail.com>",
@@ -53,5 +53,7 @@
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "pdfjs-dist": "2.13.216"
+  }
 }
