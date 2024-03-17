@@ -22,9 +22,11 @@ yarn add hsu-utils
 
 - `Typeof` 获取类型或判断类型
 
-  > `number`、`string`、`boolean`、`object`、`array`、`null`、`undefined`、`unknown`、`function`、`symbol`、`date`、`formdata`
+  > string、number、boolean、undefined、function、symbol、bigint、object、array、null、date、formdata、set、map、regexp、arraybuffer、blob
 
 - `get_string_width` 获取字符串长度
   > 根据字体属性进行计算，默认 size 为 12，family 为 微软雅黑
 - `loadImage` 异步加载图片
   > 确保相同的图片只加载一次
+- `renderPDF` 渲染 PDF
+- `downloadFile` 下载文件
