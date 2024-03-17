@@ -65,4 +65,12 @@ describe('Typeof', () => {
   test(`typeof regexp`, () => {
     expect(Typeof(new RegExp(''), 'regexp')).toBe(true)
   })
+
+  test(`typeof arrayBuffer`, () => {
+    expect(Typeof(new ArrayBuffer(20), 'arraybuffer')).toBe(true)
+  })
+
+  test(`typeof blob`, () => {
+    expect(Typeof(new Blob([]), 'blob')).toBe(true)
+  })
 })
