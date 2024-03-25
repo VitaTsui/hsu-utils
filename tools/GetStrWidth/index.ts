@@ -7,7 +7,7 @@ interface Font {
   family?: string
 }
 
-export default function get_string_width(str: string, font: Font = {}): number {
+export default function get_string_width(str: string, font: Font = {}, letterSpacing: number = 0): number {
   const {
     style = 'normal',
     variant = 'normal',
@@ -24,7 +24,11 @@ export default function get_string_width(str: string, font: Font = {}): number {
 
   const metrics = ctx.measureText(str)
 
-  const width = +(+metrics.width.toFixed(2) + 0.01).toFixed(2)
+  let width = +(+metrics.width.toFixed(2) + 0.01).toFixed(2)
+
+  const _letterSpacing = (str.length > 0 ? str.length - 1 : 0) * letterSpacing
+
+  width += _letterSpacing
 
   return width
 }
