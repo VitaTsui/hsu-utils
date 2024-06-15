@@ -7,7 +7,19 @@ import ConvertNumbers from './ConvertNumbers'
 import loadImage from './LoadImage'
 import renderPDF from './RenderPDF'
 import downloadFile from './DownloadFile'
-export { console_table, deepCopy, Equal, Typeof, get_string_width, ConvertNumbers, loadImage, renderPDF, downloadFile }
+import array_is_includes from './ArrayIsIncludes'
+export {
+  console_table,
+  deepCopy,
+  Equal,
+  Typeof,
+  get_string_width,
+  ConvertNumbers,
+  loadImage,
+  renderPDF,
+  downloadFile,
+  array_is_includes
+}
 
 import { ConsoleData } from './ConsoleTable'
 export type { ConsoleData }

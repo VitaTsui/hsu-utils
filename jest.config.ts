@@ -8,5 +8,14 @@ export default {
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'node'],
-  coveragePathIgnorePatterns: ['/node_modules/', '/DownloadFile/', '/GetStrWidth/', '/LoadImage/', '/RenderPDF/']
+  coveragePathIgnorePatterns: [
+    '/lib/',
+    '/es/',
+    '/dist/',
+    '/node_modules/',
+    '/DownloadFile/',
+    '/GetStrWidth/',
+    '/LoadImage/',
+    '/RenderPDF/'
+  ]
 }
