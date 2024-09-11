@@ -15,6 +15,7 @@
     "jsx": "react",
     "newLine": "lf",
     "removeComments": true,
+    "downlevelIteration":true
   },
   "include": ["../tools/**/*.ts", "../tools/**/*.tsx"],
   "exclude": ["node_modules", "../tools/**/__tests__"]
