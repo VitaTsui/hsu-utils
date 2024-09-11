@@ -2,12 +2,24 @@ import { GlobalWorkerOptions, getDocument } from 'pdfjs-dist/legacy/build/pdf.js
 import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/src/display/api'
 GlobalWorkerOptions.workerSrc = 'https://cdn.bootcss.com/pdf.js/2.13.216/pdf.worker.js'
 
-interface PDFOption {
+interface RenderOption {
   pdfUrl: string
   containerId: string
   startPageNum?: number
   endPageNum?: number
+  pixelRatio?: number
+  scale?: number
 }
+
+interface RenderPageOption {
+  pdf: PDFDocumentProxy
+  container: HTMLElement
+  num: number
+  pixelRatio?: number
+  scale?: number
+}
+
+const PDFMap = new Map<string, PDFDocumentProxy>()
 
 function clear(containerId: string) {
   const container = document.getElementById(containerId)
@@ -19,7 +31,7 @@ function clear(containerId: string) {
   })
 }
 
-function render(pdf: PDFDocumentProxy, container: HTMLElement, num: number) {
+function renderPage({ pdf, container, num, pixelRatio = 2, scale = 1 }: RenderPageOption) {
   pdf.getPage(num).then((page: PDFPageProxy) => {
     const pageDiv = document.createElement('div')
     pageDiv.setAttribute('id', `${container.id}-page-${num}`)
@@ -29,8 +41,7 @@ function render(pdf: PDFDocumentProxy, container: HTMLElement, num: number) {
     pageDiv.appendChild(canvas)
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-    const scale = 1
-    const devicePixelRatio = window.devicePixelRatio * 2
+    const devicePixelRatio = window.devicePixelRatio * pixelRatio
     const viewport = page.getViewport({ scale: scale * devicePixelRatio })
 
     canvas.style.width = '100%'
@@ -47,16 +58,41 @@ function render(pdf: PDFDocumentProxy, container: HTMLElement, num: number) {
   })
 }
 
-export default async function renderPDF({ pdfUrl, containerId, startPageNum, endPageNum }: PDFOption) {
+async function getNumPages(pdfUrl: string) {
+  let pdf = PDFMap.get(pdfUrl)
+
+  if (!pdf) {
+    const loadingTask = getDocument({
+      url: pdfUrl,
+      cMapUrl: 'https://unpkg.com/browse/pdfjs-dist@2.13.216/cmaps/',
+      cMapPacked: true
+    })
+
+    pdf = await loadingTask.promise
+
+    PDFMap.set(pdfUrl, pdf)
+  }
+
+  return pdf.numPages
+}
+
+async function render({ pdfUrl, containerId, startPageNum, endPageNum, pixelRatio, scale }: RenderOption) {
   clear(containerId)
 
-  const loadingTask = getDocument({
-    url: pdfUrl,
-    cMapUrl: 'https://unpkg.com/browse/pdfjs-dist@2.13.216/cmaps/',
-    cMapPacked: true
-  })
+  let pdf = PDFMap.get(pdfUrl)
 
-  const pdf = await loadingTask.promise
+  if (!pdf) {
+    const loadingTask = getDocument({
+      url: pdfUrl,
+      cMapUrl: 'https://unpkg.com/browse/pdfjs-dist@2.13.216/cmaps/',
+      cMapPacked: true
+    })
+
+    pdf = await loadingTask.promise
+
+    PDFMap.set(pdfUrl, pdf)
+  }
+
   const container = document.getElementById(containerId)
 
   if (!container) return
@@ -65,6 +101,12 @@ export default async function renderPDF({ pdfUrl, containerId, startPageNum, end
   const end = endPageNum ?? pdf.numPages
 
   for (let i = start; i <= end; i++) {
-    render(pdf, container as HTMLElement, i)
+    renderPage({ pdf, container: container as HTMLElement, num: i, pixelRatio, scale })
   }
 }
+
+const RenderPDF = {
+  render,
+  getNumPages
+}
+export default RenderPDF
