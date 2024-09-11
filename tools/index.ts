@@ -5,7 +5,7 @@ import Typeof from './Typeof'
 import get_string_width from './GetStrWidth'
 import ConvertNumbers from './ConvertNumbers'
 import loadImage from './LoadImage'
-import renderPDF from './RenderPDF'
+import RenderPDF from './RenderPDF'
 import downloadFile from './DownloadFile'
 import array_is_includes from './ArrayIsIncludes'
 export {
@@ -16,7 +16,7 @@ export {
   get_string_width,
   ConvertNumbers,
   loadImage,
-  renderPDF,
+  RenderPDF,
   downloadFile,
   array_is_includes
 }
