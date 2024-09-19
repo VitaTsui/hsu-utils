@@ -42,9 +42,9 @@ function renderPage({ pdf, container, num, pixelRatio = 2, scale = 1 }: RenderPa
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
     const devicePixelRatio = window.devicePixelRatio * pixelRatio
-    const viewport = page.getViewport({ scale: scale * devicePixelRatio })
+    const viewport = page.getViewport({ scale: 1 * devicePixelRatio })
 
-    canvas.style.width = '100%'
+    canvas.style.width = `calc(100% * ${scale})`
     canvas.style.height = '100%'
     canvas.width = viewport.width
     canvas.height = viewport.height
