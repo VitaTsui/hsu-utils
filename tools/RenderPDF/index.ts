@@ -36,7 +36,7 @@ async function load(pdfUrl: string) {
     PDFMap.set(pdfUrl, pdf)
   }
 
-  return pdf
+  return await pdf
 }
 
 async function getNumPages(pdfUrl: string) {
