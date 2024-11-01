@@ -19,7 +19,7 @@ interface RenderPageOption {
   scale?: number
 }
 
-const PDFMap = new Map<string, PDFDocumentProxy>()
+const PDFMap = new Map<string, Promise<PDFDocumentProxy>>()
 
 async function load(pdfUrl: string) {
   let pdf = PDFMap.get(pdfUrl)
@@ -31,7 +31,7 @@ async function load(pdfUrl: string) {
       cMapPacked: true
     })
 
-    pdf = await loadingTask.promise
+    pdf = loadingTask.promise
 
     PDFMap.set(pdfUrl, pdf)
   }
