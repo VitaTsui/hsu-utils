@@ -21,6 +21,30 @@ interface RenderPageOption {
 
 const PDFMap = new Map<string, PDFDocumentProxy>()
 
+async function load(pdfUrl: string) {
+  let pdf = PDFMap.get(pdfUrl)
+
+  if (!pdf) {
+    const loadingTask = getDocument({
+      url: pdfUrl,
+      cMapUrl: 'https://unpkg.com/browse/pdfjs-dist@2.13.216/cmaps/',
+      cMapPacked: true
+    })
+
+    pdf = await loadingTask.promise
+
+    PDFMap.set(pdfUrl, pdf)
+  }
+
+  return pdf
+}
+
+async function getNumPages(pdfUrl: string) {
+  const pdf = await load(pdfUrl)
+
+  return pdf.numPages
+}
+
 function clear(containerId: string) {
   const container = document.getElementById(containerId)
 
@@ -29,6 +53,23 @@ function clear(containerId: string) {
   pages?.forEach((item) => {
     container?.removeChild(item)
   })
+}
+
+async function render({ pdfUrl, containerId, startPageNum, endPageNum, pixelRatio, scale }: RenderOption) {
+  clear(containerId)
+
+  const container = document.getElementById(containerId)
+
+  if (!container) return
+
+  const pdf = await load(pdfUrl)
+
+  const start = startPageNum ?? 1
+  const end = endPageNum ?? pdf.numPages
+
+  for (let i = start; i <= end; i++) {
+    renderPage({ pdf, container: container as HTMLElement, num: i, pixelRatio, scale })
+  }
 }
 
 function renderPage({ pdf, container, num, pixelRatio = 2, scale = 1 }: RenderPageOption) {
@@ -58,55 +99,10 @@ function renderPage({ pdf, container, num, pixelRatio = 2, scale = 1 }: RenderPa
   })
 }
 
-async function getNumPages(pdfUrl: string) {
-  let pdf = PDFMap.get(pdfUrl)
-
-  if (!pdf) {
-    const loadingTask = getDocument({
-      url: pdfUrl,
-      cMapUrl: 'https://unpkg.com/browse/pdfjs-dist@2.13.216/cmaps/',
-      cMapPacked: true
-    })
-
-    pdf = await loadingTask.promise
-
-    PDFMap.set(pdfUrl, pdf)
-  }
-
-  return pdf.numPages
-}
-
-async function render({ pdfUrl, containerId, startPageNum, endPageNum, pixelRatio, scale }: RenderOption) {
-  clear(containerId)
-
-  let pdf = PDFMap.get(pdfUrl)
-
-  if (!pdf) {
-    const loadingTask = getDocument({
-      url: pdfUrl,
-      cMapUrl: 'https://unpkg.com/browse/pdfjs-dist@2.13.216/cmaps/',
-      cMapPacked: true
-    })
-
-    pdf = await loadingTask.promise
-
-    PDFMap.set(pdfUrl, pdf)
-  }
-
-  const container = document.getElementById(containerId)
-
-  if (!container) return
-
-  const start = startPageNum ?? 1
-  const end = endPageNum ?? pdf.numPages
-
-  for (let i = start; i <= end; i++) {
-    renderPage({ pdf, container: container as HTMLElement, num: i, pixelRatio, scale })
-  }
-}
-
 const RenderPDF = {
-  render,
-  getNumPages
+  load,
+  getNumPages,
+  clear,
+  render
 }
 export default RenderPDF
