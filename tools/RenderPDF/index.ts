@@ -1,6 +1,6 @@
 import { GlobalWorkerOptions, getDocument } from 'pdfjs-dist/legacy/build/pdf.js'
 import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/src/display/api'
-GlobalWorkerOptions.workerSrc = 'https://cdn.bootcss.com/pdf.js/2.13.216/pdf.worker.js'
+GlobalWorkerOptions.workerSrc = 'https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/pdf.js/2.13.216/pdf.worker.js'
 
 interface RenderOption {
   pdfUrl: string
