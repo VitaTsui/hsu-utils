@@ -32,8 +32,6 @@ export function toChineseNum(num: number, options: C_Options = {}) {
 
   if (benchmark) {
     num *= benchmark
-
-    num = +num.toFixed(4)
   }
 
   // 超出转换范围

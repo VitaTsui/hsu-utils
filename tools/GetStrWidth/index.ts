@@ -3,24 +3,16 @@ interface Font {
   variant?: string
   weight?: string
   size?: number
-  lineHeight?: number
   family?: string
 }
 
 export default function get_string_width(str: string, font: Font = {}, letterSpacing: number = 0): number {
-  const {
-    style = 'normal',
-    variant = 'normal',
-    weight = 'normal',
-    size = 12,
-    lineHeight = 1,
-    family: fontFamily = '微软雅黑'
-  } = font
+  const { style = 'normal', variant = 'normal', weight = 'normal', size = 12, family: fontFamily = '微软雅黑' } = font
 
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-  ctx.font = `${style} ${variant} ${weight} ${size}px/${lineHeight} ${fontFamily}`
+  ctx.font = `${style} ${variant} ${weight} ${size}px ${fontFamily}`
 
   const metrics = ctx.measureText(str)
 
