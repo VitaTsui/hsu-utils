@@ -106,7 +106,5 @@ export default function console_table(data: ConsoleData, callBack?: (str: string
 
   console.log(table)
 
-  if (callBack) {
-    callBack(table)
-  }
+  callBack?.(table)
 }
