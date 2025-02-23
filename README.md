@@ -30,7 +30,7 @@ yarn add hsu-utils
 |                   | getNumPages  | 获取 PDF 页数                   | (pdfUrl: string): Promise\<number>                                            | -                                |
 |                   | clear        | 删除已渲染的 PDF                | (containerId: string) => void                                                 | -                                |
 |                   | render       | 渲染 PDF                        | (options: [RenderOption](#renderoption)) => Promise\<void>                    | -                                |
-| Typeof            | -            | 获取类型或判断类型              | \<T>(value: T, isType?: [Type](#type)) => boolean                             | -                                |
+| Typeof            | -            | 获取类型或判断类型              | \<T>(value: T, isType?: [Type](#type)) => boolean \| Type                     | -                                |
 
 ## 类型
 
@@ -76,3 +76,7 @@ yarn add hsu-utils
 > type BaseType = 'string' | 'number' | 'boolean' | 'undefined' | 'function' | 'symbol' | 'bigint'  
 > type ObjectType = 'object' | 'array' | 'null' | 'date' | 'formdata' | 'set' | 'map' | 'regexp' | 'arraybuffer' | 'blob'  
 > type Type = BaseType | ObjectType
+
+## License
+
+MIT
