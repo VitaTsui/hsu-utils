@@ -14,7 +14,7 @@ export default {
     '/dist/',
     '/node_modules/',
     '/DownloadFile/',
-    '/GetStrWidth/',
+    '/GetStrSize/',
     '/LoadImage/',
     '/RenderPDF/'
   ]

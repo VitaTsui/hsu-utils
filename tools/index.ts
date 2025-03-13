@@ -2,7 +2,7 @@ import console_table from './ConsoleTable'
 import deepCopy from './DeepCopy'
 import Equal from './Equal'
 import Typeof from './Typeof'
-import get_string_width from './GetStrWidth'
+import get_string_size from './GetStrSize'
 import ConvertNumbers from './ConvertNumbers'
 import loadImage from './LoadImage'
 import RenderPDF from './RenderPDF'
@@ -13,7 +13,7 @@ export {
   deepCopy,
   Equal,
   Typeof,
-  get_string_width,
+  get_string_size,
   ConvertNumbers,
   loadImage,
   RenderPDF,
