@@ -29,5 +29,5 @@ export default function get_string_size(
 
   width += _letterSpacing
 
-  return { width, height }
+  return { width: +width.toFixed(2), height: +height.toFixed(2) }
 }
