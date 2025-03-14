@@ -6,7 +6,11 @@ interface Font {
   family?: string
 }
 
-export default function get_string_width(str: string, font: Font = {}, letterSpacing: number = 0): number {
+export default function get_string_size(
+  str: string,
+  font: Font = {},
+  letterSpacing: number = 0
+): { width: number; height: number } {
   const { style = 'normal', variant = 'normal', weight = 'normal', size = 12, family: fontFamily = '微软雅黑' } = font
 
   const canvas = document.createElement('canvas')
@@ -17,10 +21,13 @@ export default function get_string_width(str: string, font: Font = {}, letterSpa
   const metrics = ctx.measureText(str)
 
   let width = +(+metrics.width.toFixed(2) + 0.01).toFixed(2)
+  const height = +(+metrics.actualBoundingBoxAscent.toFixed(2) + +metrics.actualBoundingBoxDescent.toFixed(2)).toFixed(
+    2
+  )
 
   const _letterSpacing = (str.length > 0 ? str.length - 1 : 0) * letterSpacing
 
   width += _letterSpacing
 
-  return width
+  return { width, height }
 }
