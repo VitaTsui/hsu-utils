@@ -52,13 +52,13 @@ yarn add hsu-utils
 
 ### Font
 
-| 参数    | 说明     | 类型   | 默认值   | 备注 |
-| ------- | -------- | ------ | -------- | ---- |
-| size    | 字体大小 | number | 12       | -    |
-| style   | 字体样式 | string | normal   | -    |
-| variant | 字体变体 | string | normal   | -    |
-| weight  | 字体粗细 | string | normal   | -    |
-| family  | 字体系列 | string | 微软雅黑 | -    |
+| 参数    | 说明     | 类型   | 默认值     | 备注 |
+| ------- | -------- | ------ | ---------- | ---- |
+| size    | 字体大小 | number | 10         | -    |
+| style   | 字体样式 | string | normal     | -    |
+| variant | 字体变体 | string | normal     | -    |
+| weight  | 字体粗细 | string | normal     | -    |
+| family  | 字体系列 | string | sans-serif | -    |
 
 ### RenderOption
 

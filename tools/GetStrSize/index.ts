@@ -11,7 +11,7 @@ export default function get_string_size(
   font: Font = {},
   letterSpacing: number = 0
 ): { width: number; height: number } {
-  const { style = 'normal', variant = 'normal', weight = 'normal', size = 12, family: fontFamily = '微软雅黑' } = font
+  const { style = 'normal', variant = 'normal', weight = 'normal', size = 10, family: fontFamily = 'sans-serif' } = font
 
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
