@@ -25,4 +25,16 @@ describe('array_is_includes', () => {
   test(`[{1: 1}, 3], [3, 2, {1: 1}]`, () => {
     expect(array_is_includes([{ 1: 1 }, 3], [3, 2, { 1: 1 }])).toBe(true)
   })
+
+  test(`[], []`, () => {
+    expect(array_is_includes([], [])).toBe(false)
+  })
+
+  test(`[1, 2, 3], []`, () => {
+    expect(array_is_includes([1, 2, 3], [])).toBe(false)
+  })
+
+  test(`[], [1, 2, 3]`, () => {
+    expect(array_is_includes([], [1, 2, 3])).toBe(false)
+  })
 })
