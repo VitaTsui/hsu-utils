@@ -11,6 +11,10 @@ function countMap<T>(arr: Array<T>) {
 }
 
 export default function array_is_includes<T>(arr1: Array<T>, arr2: Array<T>) {
+  if (arr1.length === 0 || arr2.length === 0) {
+    return false
+  }
+
   const smallArr = arr1.length <= arr2.length ? arr1 : arr2
   const largeArr = arr1.length > arr2.length ? arr1 : arr2
 
