@@ -31,7 +31,8 @@ yarn add hsu-utils
 |                   | clear        | 删除已渲染的 PDF                | (containerId: string) => void                                                                    | -                                |
 |                   | render       | 渲染 PDF                        | (options: [RenderOption](#renderoption)) => Promise\<void>                                       | -                                |
 | Typeof            | -            | 获取类型或判断类型              | \<T>(value: T, isType?: [Type](#type)) => boolean \| Type                                        | -                                |
-| GenerateRandomStr | -            | 生成随机字符串                  | (length:number)=>string                                                                          | -                                |
+| generateRandomStr | -            | 生成随机字符串                  | (length:number) => string                                                                        | -                                |
+| getTimeDifference | -            | 获取时间差                      | (start: string, end: string) => [TimeDifference](#timedifference)                                | -                                |
 
 ## 类型
 
@@ -77,6 +78,16 @@ yarn add hsu-utils
 > type BaseType = 'string' | 'number' | 'boolean' | 'undefined' | 'function' | 'symbol' | 'bigint'  
 > type ObjectType = 'object' | 'array' | 'null' | 'date' | 'formdata' | 'set' | 'map' | 'regexp' | 'arraybuffer' | 'blob'  
 > type Type = BaseType | ObjectType
+
+### TimeDifference
+
+| 参数         | 说明       | 类型   | 默认值 | 备注 |
+| ------------ | ---------- | ------ | ------ | ---- |
+| days         | 相差天数   | number | -      | -    |
+| hours        | 相差小时   | number | -      | -    |
+| minutes      | 相差分钟   | number | -      | -    |
+| seconds      | 相差秒数   | number | -      | -    |
+| milliseconds | 相差毫秒数 | number | -      | -    |
 
 ## License
 
