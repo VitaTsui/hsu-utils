@@ -9,6 +9,7 @@ import RenderPDF from './RenderPDF'
 import downloadFile from './DownloadFile'
 import array_is_includes from './ArrayIsIncludes'
 import generateRandomStr from './GenerateRandomStr'
+import getTimeDifference from './GetTimeDifference'
 export {
   console_table,
   deepCopy,
@@ -20,7 +21,8 @@ export {
   RenderPDF,
   downloadFile,
   array_is_includes,
-  generateRandomStr
+  generateRandomStr,
+  getTimeDifference
 }
 
 import { ConsoleData } from './ConsoleTable'
