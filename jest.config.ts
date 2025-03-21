@@ -16,6 +16,7 @@ export default {
     '/DownloadFile/',
     '/GetStrSize/',
     '/LoadImage/',
-    '/RenderPDF/'
+    '/RenderPDF/',
+    '/GenerateRandomStr/'
   ]
 }

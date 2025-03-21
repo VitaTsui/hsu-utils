@@ -8,6 +8,7 @@ import loadImage from './LoadImage'
 import RenderPDF from './RenderPDF'
 import downloadFile from './DownloadFile'
 import array_is_includes from './ArrayIsIncludes'
+import generateRandomStr from './GenerateRandomStr'
 export {
   console_table,
   deepCopy,
@@ -18,7 +19,8 @@ export {
   loadImage,
   RenderPDF,
   downloadFile,
-  array_is_includes
+  array_is_includes,
+  generateRandomStr
 }
 
 import { ConsoleData } from './ConsoleTable'

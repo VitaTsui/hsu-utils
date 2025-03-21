@@ -19,7 +19,7 @@ yarn add hsu-utils
 | array_is_includes | -            | 判断一个数组是否包含另一个数组  | \<T>(arr1: Array\<T>, arr2: Array\<T>) => boolean                                                | -                                |
 | console_table     | -            | 在控制台打印像 MySql 一样的表格 | (data: [ConsoleData](#consoledata), callBack?: (str: string) => void) => void                    | -                                |
 | ConvertNumbers    | toChineseNum | 数字转中文                      | (num: number, options?: [C_Options](#c_options)) => string                                       | -                                |
-| deepCopy          | -            | 深拷贝                          | <T = any>(data: T) => T                                                                          | -                                |
+| deepCopy          | -            | 深拷贝                          | \<T>(data: T) => T                                                                               | -                                |
 | downloadFile      | -            | 文件下载                        | (file: ArrayBuffer \| string, fileName: string) => void                                          | string 为 http(s) 地址或本地地址 |
 | Equal             | ValEqual     | 判断值相等                      | <T = unknown>(obj1: T, obj2: T) => boolean                                                       | -                                |
 |                   | TypeEqual    | 判断类型相同                    | <T = unknown>(obj1: T, obj2: T) => boolean                                                       | -                                |
@@ -31,6 +31,7 @@ yarn add hsu-utils
 |                   | clear        | 删除已渲染的 PDF                | (containerId: string) => void                                                                    | -                                |
 |                   | render       | 渲染 PDF                        | (options: [RenderOption](#renderoption)) => Promise\<void>                                       | -                                |
 | Typeof            | -            | 获取类型或判断类型              | \<T>(value: T, isType?: [Type](#type)) => boolean \| Type                                        | -                                |
+| GenerateRandomStr | -            | 生成随机字符串                  | (length:number)=>string                                                                          | -                                |
 
 ## 类型
 
