@@ -1,13 +1,13 @@
 import { Typeof } from '..'
 
-type CommonObj<T = any> = Record<string, T>
+type CommonObj<T = unknown> = Record<string, T>
 
 /**
  * 深拷贝
  * @param data
  * @returns
  */
-export default function deepCopy<T = any>(data: T): T {
+export default function deepCopy<T>(data: T): T {
   if (Typeof(data) === 'date') {
     return new Date((data as Date).toISOString()) as T
   }
