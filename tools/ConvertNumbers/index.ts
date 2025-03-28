@@ -19,7 +19,7 @@ export function toChineseNum(num: number, options: C_Options = {}) {
   // 对应整数部分扩展单位
   const cnIntUnits = {
     lowercase: ['', '万', '亿', '兆'],
-    uppercase: ['', '万', '亿', '兆']
+    uppercase: ['', '萬', '億', '兆']
   }
   // 最大处理的数字
   const maxNum = 9999999999999999.9999999999999999
