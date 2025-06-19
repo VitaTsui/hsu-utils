@@ -1,8 +1,29 @@
+function downloadFileByLocalPath(path: string, fileName?: string): void {
+  fetch(path)
+    .then((response) => response.arrayBuffer())
+    .then((arrayBuffer) => {
+      downloadFile(arrayBuffer, fileName)
+    })
+}
+
 function downloadFileByUrl(url: string, fileName?: string): void {
+  if (!url.startsWith('http')) {
+    downloadFileByLocalPath(url, fileName)
+    return
+  }
+
   fetch(url)
     .then((response) => response.arrayBuffer())
     .then((arrayBuffer) => {
       downloadFile(arrayBuffer, fileName)
+    })
+    .catch(() => {
+      const downloadElement = document.createElement('a')
+      downloadElement.href = url
+      downloadElement.download = decodeURIComponent(fileName || '')
+      document.body.appendChild(downloadElement)
+      downloadElement.click()
+      document.body.removeChild(downloadElement)
     })
 }
 
@@ -16,7 +37,7 @@ export default function downloadFile(file: ArrayBuffer | string, fileName?: stri
   const downloadElement = document.createElement('a')
   const href = window.URL.createObjectURL(blob)
   downloadElement.href = href
-  downloadElement.download = decodeURI(fileName || '')
+  downloadElement.download = decodeURIComponent(fileName || '')
   document.body.appendChild(downloadElement)
   downloadElement.click()
   document.body.removeChild(downloadElement)
