@@ -20,7 +20,7 @@ yarn add hsu-utils
 | console_table     | -            | 在控制台打印像 MySql 一样的表格 | (data: [ConsoleData](#consoledata), callBack?: (str: string) => void) => void                    | -                                |
 | ConvertNumbers    | toChineseNum | 数字转中文                      | (num: number, options?: [C_Options](#c_options)) => string                                       | -                                |
 | deepCopy          | -            | 深拷贝                          | \<T>(data: T) => T                                                                               | -                                |
-| downloadFile      | -            | 文件下载                        | (file: ArrayBuffer \| string, fileName: string) => void                                          | string 为 http(s) 地址或本地地址 |
+| downloadFile      | -            | 文件下载                        | (file: ArrayBuffer \| string, fileName?: string) => void                                         | string 为 http(s) 地址或本地地址 |
 | Equal             | ValEqual     | 判断值相等                      | <T = unknown>(obj1: T, obj2: T) => boolean                                                       | -                                |
 |                   | TypeEqual    | 判断类型相同                    | <T = unknown>(obj1: T, obj2: T) => boolean                                                       | -                                |
 |                   | ObjEqual     | 判断对象相等                    | <T = object>(obj1: T, obj2: T) => boolean                                                        | -                                |
