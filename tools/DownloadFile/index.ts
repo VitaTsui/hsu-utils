@@ -1,4 +1,5 @@
 import { Typeof } from '..'
+
 async function downloadFileByUrl(url: string, fileName?: string) {
   try {
     const response = await fetch(url)
@@ -14,19 +15,18 @@ async function downloadFileByUrl(url: string, fileName?: string) {
   }
 }
 
-export default function downloadFile(file: ArrayBuffer | Blob | string, fileName?: string) {
+export default async function downloadFile(file: ArrayBuffer | Blob | string, fileName?: string) {
   if (typeof file === 'string') {
-    downloadFileByUrl(file, fileName)
-    return
+    await downloadFileByUrl(file, fileName)
+  } else {
+    const blob = Typeof(file) === 'blob' ? (file as Blob) : new Blob([file as ArrayBuffer])
+    const downloadElement = document.createElement('a')
+    const href = window.URL.createObjectURL(blob)
+    downloadElement.href = href
+    downloadElement.download = decodeURIComponent(fileName || '')
+    document.body.appendChild(downloadElement)
+    downloadElement.click()
+    document.body.removeChild(downloadElement)
+    window.URL.revokeObjectURL(href)
   }
-
-  const blob = Typeof(file) === 'blob' ? (file as Blob) : new Blob([file as ArrayBuffer])
-  const downloadElement = document.createElement('a')
-  const href = window.URL.createObjectURL(blob)
-  downloadElement.href = href
-  downloadElement.download = decodeURIComponent(fileName || '')
-  document.body.appendChild(downloadElement)
-  downloadElement.click()
-  document.body.removeChild(downloadElement)
-  window.URL.revokeObjectURL(href)
 }
