@@ -15,8 +15,6 @@ async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortS
       document.body.removeChild(downloadElement)
     }
   }
-
-  return
 }
 
 export default async function downloadFile(
@@ -37,6 +35,4 @@ export default async function downloadFile(
     document.body.removeChild(downloadElement)
     window.URL.revokeObjectURL(href)
   }
-
-  return
 }
