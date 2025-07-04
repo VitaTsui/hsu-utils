@@ -1,6 +1,6 @@
 import { Typeof } from '..'
 
-async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortSignal) {
+async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortSignal): Promise<void> {
   try {
     const response = await fetch(url, { signal })
     const arrayBuffer = await response.arrayBuffer()
@@ -15,9 +15,15 @@ async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortS
       document.body.removeChild(downloadElement)
     }
   }
+
+  return
 }
 
-export default async function downloadFile(file: ArrayBuffer | Blob | string, fileName?: string, signal?: AbortSignal) {
+export default async function downloadFile(
+  file: ArrayBuffer | Blob | string,
+  fileName?: string,
+  signal?: AbortSignal
+): Promise<void> {
   if (typeof file === 'string') {
     await downloadFileByUrl(file, fileName, signal)
   } else {
@@ -31,4 +37,6 @@ export default async function downloadFile(file: ArrayBuffer | Blob | string, fi
     document.body.removeChild(downloadElement)
     window.URL.revokeObjectURL(href)
   }
+
+  return
 }
