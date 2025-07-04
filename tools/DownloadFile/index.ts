@@ -5,13 +5,15 @@ async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortS
     const response = await fetch(url, { signal })
     const arrayBuffer = await response.arrayBuffer()
     downloadFile(arrayBuffer, fileName)
-  } catch {
-    const downloadElement = document.createElement('a')
-    downloadElement.href = url
-    downloadElement.download = decodeURIComponent(fileName || '')
-    document.body.appendChild(downloadElement)
-    downloadElement.click()
-    document.body.removeChild(downloadElement)
+  } catch (error) {
+    if (error?.name !== 'AbortError') {
+      const downloadElement = document.createElement('a')
+      downloadElement.href = url
+      downloadElement.download = decodeURIComponent(fileName || '')
+      document.body.appendChild(downloadElement)
+      downloadElement.click()
+      document.body.removeChild(downloadElement)
+    }
   }
 }
 
