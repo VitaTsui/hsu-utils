@@ -6,7 +6,7 @@ async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortS
     const arrayBuffer = await response.arrayBuffer()
     downloadFile(arrayBuffer, fileName)
   } catch (error) {
-    if (error?.name !== 'AbortError') {
+    if ((error as DOMException)?.name !== 'AbortError') {
       const downloadElement = document.createElement('a')
       downloadElement.href = url
       downloadElement.download = decodeURIComponent(fileName || '')
