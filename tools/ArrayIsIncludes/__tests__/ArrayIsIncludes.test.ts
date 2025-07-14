@@ -37,4 +37,8 @@ describe('array_is_includes', () => {
   test(`[], [1, 2, 3]`, () => {
     expect(array_is_includes([], [1, 2, 3])).toBe(false)
   })
+
+  test(`[''], ['']`, () => {
+    expect(array_is_includes([''], [''])).toBe(true)
+  })
 })

@@ -22,9 +22,9 @@ export default function array_is_includes<T>(arr1: Array<T>, arr2: Array<T>) {
   const largeArrMap = countMap(largeArr)
 
   for (const [key, count] of smallArrMap.entries()) {
-    const largekey = [...largeArrMap.keys()].find((item) => Equal.ValEqual(item, key))
+    const largekey = [...largeArrMap.keys()].filter((item) => Equal.ValEqual(item, key))
 
-    if (!largekey || (largekey && largeArrMap.get(largekey) !== count)) {
+    if (!largekey.length || (largekey.length && largeArrMap.get(largekey[0]) !== count)) {
       return false
     }
   }
