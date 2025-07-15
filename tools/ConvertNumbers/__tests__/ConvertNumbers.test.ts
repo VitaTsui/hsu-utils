@@ -12,6 +12,6 @@ describe('ConvertNumbers', () => {
     expect(ConvertNumbers.toChineseNum(1.01)).toBe('一点零一')
     expect(ConvertNumbers.toChineseNum(1.011)).toBe('一点零一一')
     expect(ConvertNumbers.toChineseNum(10100)).toBe('一万零一百')
-    expect(ConvertNumbers.toChineseNum(10100.011, { textType: 'uppercase' })).toBe('壹万零壹佰点零壹壹')
+    expect(ConvertNumbers.toChineseNum(10100.011, { textType: 'uppercase' })).toBe('壹萬零壹佰点零壹壹')
   })
 })
