@@ -16,7 +16,7 @@ export default function get_string_size(str: string, font: Font = {}): { width: 
 
   const metrics = ctx.measureText(str)
 
-  let width = +(+metrics.width.toFixed(2) + 0.01).toFixed(2)
+  let width = +(+metrics.width.toFixed(2)).toFixed(2)
   const height = +(+metrics.actualBoundingBoxAscent.toFixed(2) + +metrics.actualBoundingBoxDescent.toFixed(2)).toFixed(
     2
   )
