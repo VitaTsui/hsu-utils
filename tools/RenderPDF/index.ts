@@ -1,6 +1,6 @@
 import { GlobalWorkerOptions, getDocument } from 'pdfjs-dist/legacy/build/pdf.js'
 import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/src/display/api'
-GlobalWorkerOptions.workerSrc = 'https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/pdf.js/2.13.216/pdf.worker.js'
+GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.worker.min.js'
 
 interface RenderOption {
   pdfUrl: string
@@ -9,6 +9,7 @@ interface RenderOption {
   endPageNum?: number
   pixelRatio?: number
   scale?: number
+  workerSrc?: string
 }
 
 interface RenderPageOption {
@@ -21,7 +22,11 @@ interface RenderPageOption {
 
 const PDFMap = new Map<string, Promise<PDFDocumentProxy>>()
 
-async function load(pdfUrl: string) {
+async function load(pdfUrl: string, workerSrc?: string) {
+  if (workerSrc) {
+    GlobalWorkerOptions.workerSrc = workerSrc
+  }
+
   let pdf = PDFMap.get(pdfUrl)
 
   if (!pdf) {
@@ -39,8 +44,8 @@ async function load(pdfUrl: string) {
   return await pdf
 }
 
-async function getNumPages(pdfUrl: string) {
-  const pdf = await load(pdfUrl)
+async function getNumPages(pdfUrl: string, workerSrc?: string) {
+  const pdf = await load(pdfUrl, workerSrc)
 
   return pdf.numPages
 }
@@ -55,14 +60,14 @@ function clear(containerId: string) {
   })
 }
 
-async function render({ pdfUrl, containerId, startPageNum, endPageNum, pixelRatio, scale }: RenderOption) {
+async function render({ pdfUrl, containerId, startPageNum, endPageNum, pixelRatio, scale, workerSrc }: RenderOption) {
   clear(containerId)
 
   const container = document.getElementById(containerId)
 
   if (!container) return
 
-  const pdf = await load(pdfUrl)
+  const pdf = await load(pdfUrl, workerSrc)
 
   const start = startPageNum ?? 1
   const end = endPageNum ?? pdf.numPages
