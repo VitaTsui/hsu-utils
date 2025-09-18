@@ -10,6 +10,7 @@ async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortS
       const downloadElement = document.createElement('a')
       downloadElement.href = url
       downloadElement.download = decodeURIComponent(fileName || '')
+      downloadElement.target = '_blank'
       document.body.appendChild(downloadElement)
       downloadElement.click()
       document.body.removeChild(downloadElement)
@@ -30,6 +31,7 @@ export default async function downloadFile(
     const href = window.URL.createObjectURL(blob)
     downloadElement.href = href
     downloadElement.download = decodeURIComponent(fileName || '')
+    downloadElement.target = '_blank'
     document.body.appendChild(downloadElement)
     downloadElement.click()
     document.body.removeChild(downloadElement)
