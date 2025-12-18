@@ -14,25 +14,26 @@ yarn add hsu-utils
 
 ## 功能
 
-| 方法              | 子方法       | 说明                            | 类型                                                                                             | 备注                             |
-| ----------------- | ------------ | ------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------- |
-| array_is_includes | -            | 判断一个数组是否包含另一个数组  | \<T>(arr1: Array\<T>, arr2: Array\<T>) => boolean                                                | -                                |
-| console_table     | -            | 在控制台打印像 MySql 一样的表格 | (data: [ConsoleData](#consoledata), callBack?: (str: string) => void) => void                    | -                                |
-| ConvertNumbers    | toChineseNum | 数字转中文                      | (num: number, options?: [C_Options](#c_options)) => string                                       | -                                |
-| deepCopy          | -            | 深拷贝                          | \<T>(data: T) => T                                                                               | -                                |
-| downloadFile      | -            | 文件下载                        | (file: ArrayBuffer \| string, fileName?: string, signal?: AbortSignal) => Promise\<void>         | string 为 http(s) 地址或本地地址 |
-| Equal             | ValEqual     | 判断值相等                      | <T = unknown>(obj1: T, obj2: T) => boolean                                                       | -                                |
-|                   | TypeEqual    | 判断类型相同                    | <T = unknown>(obj1: T, obj2: T) => boolean                                                       | -                                |
-|                   | ObjEqual     | 判断对象相等                    | <T = object>(obj1: T, obj2: T) => boolean                                                        | -                                |
-| get_string_size   | -            | 获取字符串大小                  | (str: string, font?: [Font](#font), letterSpacing?: number) => { width: number; height: number } | -                                |
-| loadImage         | -            | 异步加载图片并缓存              | (url: string) => Promise\<HTMLImageElement>                                                      | -                                |
-| RenderPDF         | load         | 用于预加载 PDF                  | (pdfUrl: string) => Promise\<PDFDocumentProxy>                                                   | -                                |
-|                   | getNumPages  | 获取 PDF 页数                   | (pdfUrl: string): Promise\<number>                                                               | -                                |
-|                   | clear        | 删除已渲染的 PDF                | (containerId: string) => void                                                                    | -                                |
-|                   | render       | 渲染 PDF                        | (options: [RenderOption](#renderoption)) => Promise\<void>                                       | -                                |
-| Typeof            | -            | 获取类型或判断类型              | \<T>(value: T, isType?: [Type](#type)) => boolean \| Type                                        | -                                |
-| generateRandomStr | -            | 生成随机字符串                  | (length:number) => string                                                                        | -                                |
-| getTimeDifference | -            | 获取时间差                      | (start: string, end: string) => [TimeDifference](#timedifference)                                | -                                |
+| 方法              | 子方法                | 说明                            | 类型                                                                                     | 备注                             |
+| ----------------- | --------------------- | ------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------- |
+| array_is_includes | -                     | 判断一个数组是否包含另一个数组  | \<T>(arr1: Array\<T>, arr2: Array\<T>) => boolean                                        | -                                |
+| console_table     | -                     | 在控制台打印像 MySql 一样的表格 | (data: [ConsoleData](#consoledata), callBack?: (str: string) => void) => void            | -                                |
+| ConvertNumbers    | toChineseNum          | 数字转中文                      | (num: number, options?: [C_Options](#c_options)) => string                               | -                                |
+| deepCopy          | -                     | 深拷贝                          | \<T>(data: T) => T                                                                       | -                                |
+| downloadFile      | -                     | 文件下载                        | (file: ArrayBuffer \| string, fileName?: string, signal?: AbortSignal) => Promise\<void> | string 为 http(s) 地址或本地地址 |
+| Equal             | ValEqual              | 判断值相等                      | <T = unknown>(obj1: T, obj2: T) => boolean                                               | -                                |
+|                   | TypeEqual             | 判断类型相同                    | <T = unknown>(obj1: T, obj2: T) => boolean                                               | -                                |
+|                   | ObjEqual              | 判断对象相等                    | <T = object>(obj1: T, obj2: T) => boolean                                                | -                                |
+| get_string_size   | -                     | 获取字符串大小                  | (str: string, font?: [Font](#font)) => { width: number; height: number }                 | -                                |
+|                   | get_string_size_async | 异步获取字符串大小              | (str: string, font?: [Font](#font)) => Promise<{ width: number; height: number }>        | -                                |
+| loadImage         | -                     | 异步加载图片并缓存              | (url: string) => Promise\<HTMLImageElement>                                              | -                                |
+| RenderPDF         | load                  | 用于预加载 PDF                  | (pdfUrl: string) => Promise\<PDFDocumentProxy>                                           | -                                |
+|                   | getNumPages           | 获取 PDF 页数                   | (pdfUrl: string): Promise\<number>                                                       | -                                |
+|                   | clear                 | 删除已渲染的 PDF                | (containerId: string) => void                                                            | -                                |
+|                   | render                | 渲染 PDF                        | (options: [RenderOption](#renderoption)) => Promise\<void>                               | -                                |
+| Typeof            | -                     | 获取类型或判断类型              | \<T>(value: T, isType?: [Type](#type)) => boolean \| Type                                | -                                |
+| generateRandomStr | -                     | 生成随机字符串                  | (length:number) => string                                                                | -                                |
+| getTimeDifference | -                     | 获取时间差                      | (start: string, end: string) => [TimeDifference](#timedifference)                        | -                                |
 
 ## 类型
 
@@ -54,13 +55,12 @@ yarn add hsu-utils
 
 ### Font
 
-| 参数    | 说明     | 类型   | 默认值     | 备注 |
-| ------- | -------- | ------ | ---------- | ---- |
-| size    | 字体大小 | number | 10         | -    |
-| style   | 字体样式 | string | normal     | -    |
-| variant | 字体变体 | string | normal     | -    |
-| weight  | 字体粗细 | string | normal     | -    |
-| family  | 字体系列 | string | sans-serif | -    |
+| 参数   | 说明     | 类型   | 默认值     | 备注 |
+| ------ | -------- | ------ | ---------- | ---- |
+| size   | 字体大小 | number | 10         | -    |
+| style  | 字体样式 | string | normal     | -    |
+| weight | 字体粗细 | string | normal     | -    |
+| family | 字体系列 | string | sans-serif | -    |
 
 ### RenderOption
 
