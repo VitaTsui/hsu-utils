@@ -27,6 +27,7 @@ yarn add hsu-utils
 | get_string_size   | -                     | 获取字符串大小                  | (str: string, font?: [Font](#font)) => { width: number; height: number }                 | -                                |
 |                   | get_string_size_async | 异步获取字符串大小              | (str: string, font?: [Font](#font)) => Promise<{ width: number; height: number }>        | -                                |
 | loadImage         | -                     | 异步加载图片并缓存              | (url: string) => Promise\<HTMLImageElement>                                              | -                                |
+| loadFont          | -                     | 异步加载字体                    | (options: [LoadFontOptions](#loadfontoptions)) => Promise\<void>                          | -                                |
 | RenderPDF         | load                  | 用于预加载 PDF                  | (pdfUrl: string) => Promise\<PDFDocumentProxy>                                           | -                                |
 |                   | getNumPages           | 获取 PDF 页数                   | (pdfUrl: string): Promise\<number>                                                       | -                                |
 |                   | clear                 | 删除已渲染的 PDF                | (containerId: string) => void                                                            | -                                |
@@ -61,6 +62,14 @@ yarn add hsu-utils
 | style  | 字体样式 | string | normal     | -    |
 | weight | 字体粗细 | string | normal     | -    |
 | family | 字体系列 | string | sans-serif | -    |
+
+### LoadFontOptions
+
+| 参数 | 说明                    | 类型                      | 默认值 | 备注 |
+| ---- | ----------------------- | ------------------------- | ------ | ---- |
+| ctx  | Canvas 上下文           | CanvasRenderingContext2D  | -      | -    |
+| font | 字体配置                | [Font](#font)             | -      | -    |
+| text | 文本内容                | string                    | -      | -    |
 
 ### RenderOption
 

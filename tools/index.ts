@@ -10,6 +10,7 @@ import downloadFile from './DownloadFile'
 import array_is_includes from './ArrayIsIncludes'
 import generateRandomStr from './GenerateRandomStr'
 import getTimeDifference from './GetTimeDifference'
+import loadFont from './LoadFont'
 export {
   console_table,
   deepCopy,
@@ -17,6 +18,7 @@ export {
   Typeof,
   get_string_size,
   get_string_size_async,
+  loadFont,
   ConvertNumbers,
   loadImage,
   RenderPDF,

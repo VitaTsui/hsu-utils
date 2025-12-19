@@ -1,3 +1,5 @@
+import { loadFont } from '..'
+
 interface Font {
   style?: string
   weight?: string
@@ -11,12 +13,9 @@ export async function get_string_size_async(str: string, font: Font = {}): Promi
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
-  await document.fonts.load(`${style} ${weight} ${size}px ${fontFamily}`)
+  await loadFont({ ctx, font, text: str })
 
   ctx.font = `${style} ${weight} ${size}px ${fontFamily}`
-  ctx.fillText('', -999, -999)
-
-  await new Promise(requestAnimationFrame)
 
   const metrics = ctx.measureText(str)
 
