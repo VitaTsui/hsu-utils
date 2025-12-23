@@ -458,20 +458,88 @@ describe('getDateRange', () => {
 
   test('过去类型使用字符串格式的最小和最大时间限制', () => {
     const baseDate = dayjs('2024-03-20')
-    const result = getDateRange({
-      type: 'past',
+    const result = getDateRange({ 
+      type: 'past', 
       amount: 10,
       unit: 'day',
       baseDate: baseDate.toDate(),
       minDate: '2024-03-12',
       maxDate: '2024-03-18'
     })
-
+    
     const expectedMin = dayjs('2024-03-12').startOf('day')
     const expectedMax = dayjs('2024-03-18').endOf('day')
-
+    
     const [min, max] = result
     expect(min).toBe(expectedMin.format('YYYY-MM-DD'))
     expect(max).toBe(expectedMax.format('YYYY-MM-DD'))
+  })
+
+  test('过去类型使用 hour 单位，格式为 YYYY-MM-DD HH:mm:ss', () => {
+    const baseDate = dayjs('2024-03-20 14:30:00')
+    const result = getDateRange({ 
+      type: 'past', 
+      amount: 5,
+      unit: 'hour',
+      baseDate: baseDate.toDate()
+    })
+    
+    const expectedMin = baseDate.subtract(5, 'hour').startOf('hour')
+    const expectedMax = baseDate.endOf('hour')
+    
+    const [min, max] = result
+    expect(min).toBe(expectedMin.format('YYYY-MM-DD HH:mm:ss'))
+    expect(max).toBe(expectedMax.format('YYYY-MM-DD HH:mm:ss'))
+  })
+
+  test('未来类型使用 minute 单位，格式为 YYYY-MM-DD HH:mm:ss', () => {
+    const baseDate = dayjs('2024-03-20 14:30:00')
+    const result = getDateRange({ 
+      type: 'future', 
+      amount: 30,
+      unit: 'minute',
+      baseDate: baseDate.toDate()
+    })
+    
+    const expectedMin = baseDate.startOf('minute')
+    const expectedMax = baseDate.add(30, 'minute').endOf('minute')
+    
+    const [min, max] = result
+    expect(min).toBe(expectedMin.format('YYYY-MM-DD HH:mm:ss'))
+    expect(max).toBe(expectedMax.format('YYYY-MM-DD HH:mm:ss'))
+  })
+
+  test('过去类型使用 second 单位，格式为 YYYY-MM-DD HH:mm:ss', () => {
+    const baseDate = dayjs('2024-03-20 14:30:45')
+    const result = getDateRange({ 
+      type: 'past', 
+      amount: 60,
+      unit: 'second',
+      baseDate: baseDate.toDate()
+    })
+    
+    const expectedMin = baseDate.subtract(60, 'second').startOf('second')
+    const expectedMax = baseDate.endOf('second')
+    
+    const [min, max] = result
+    expect(min).toBe(expectedMin.format('YYYY-MM-DD HH:mm:ss'))
+    expect(max).toBe(expectedMax.format('YYYY-MM-DD HH:mm:ss'))
+  })
+
+  test('未来类型使用 hour 单位，格式为 YYYY-MM-DD HH:mm:ss', () => {
+    const baseDate = dayjs('2024-03-20 10:00:00')
+    const result = getDateRange({ 
+      type: 'future', 
+      amount: 12,
+      unit: 'hour',
+      baseDate: baseDate.toDate()
+    })
+    
+    const expectedMin = baseDate.startOf('hour')
+    const expectedMax = baseDate.add(12, 'hour').endOf('hour')
+    
+    const [min, max] = result
+    expect(min).toBe(expectedMin.format('YYYY-MM-DD HH:mm:ss'))
+    expect(max).toBe(expectedMax.format('YYYY-MM-DD HH:mm:ss'))
   })
 })

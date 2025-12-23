@@ -22,7 +22,7 @@ export interface GetDateRangeOptions {
   /** 基准日期，默认为当前日期 */
   baseDate?: string | Date | Dayjs
   /** 单位（用于过去/未来），默认为 'day' */
-  unit?: 'day' | 'week' | 'month' | 'year'
+  unit?: 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year'
   /** 最小时间（用于过去/未来，限制范围不能小于此时间） */
   minDate?: string | Date | Dayjs
   /** 最大时间（用于过去/未来，限制范围不能大于此时间） */
@@ -66,6 +66,11 @@ function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day
         case 'month':
           baseFormat = 'YYYY-MM'
           break
+        case 'second':
+        case 'minute':
+        case 'hour':
+          // 时、分、秒单位直接返回完整的时间格式
+          return 'YYYY-MM-DD HH:mm:ss'
         case 'week':
         case 'day':
         default:
@@ -76,7 +81,7 @@ function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day
   }
 
   // 如果 hasTime 为 true 且格式包含日期部分，则添加时间
-  if (hasTime && baseFormat.includes('DD')) {
+  if (hasTime && baseFormat.endsWith('DD')) {
     return `${baseFormat} HH:mm:ss`
   }
 
