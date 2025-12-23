@@ -11,6 +11,7 @@ import array_is_includes from './ArrayIsIncludes'
 import generateRandomStr from './GenerateRandomStr'
 import getTimeDifference from './GetTimeDifference'
 import loadFont from './LoadFont'
+import getDateRange from './GetDateRange'
 export {
   console_table,
   deepCopy,
@@ -25,8 +26,12 @@ export {
   downloadFile,
   array_is_includes,
   generateRandomStr,
-  getTimeDifference
+  getTimeDifference,
+  getDateRange
 }
 
 import { ConsoleData } from './ConsoleTable'
 export type { ConsoleData }
+
+import type { DateRangeType, GetDateRangeOptions, DateRangeResult } from './GetDateRange'
+export type { DateRangeType, GetDateRangeOptions, DateRangeResult }

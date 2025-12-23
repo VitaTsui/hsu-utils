@@ -14,27 +14,28 @@ yarn add hsu-utils
 
 ## 功能
 
-| 方法              | 子方法                | 说明                            | 类型                                                                                     | 备注                             |
-| ----------------- | --------------------- | ------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------- |
-| array_is_includes | -                     | 判断一个数组是否包含另一个数组  | \<T>(arr1: Array\<T>, arr2: Array\<T>) => boolean                                        | -                                |
-| console_table     | -                     | 在控制台打印像 MySql 一样的表格 | (data: [ConsoleData](#consoledata), callBack?: (str: string) => void) => void            | -                                |
-| ConvertNumbers    | toChineseNum          | 数字转中文                      | (num: number, options?: [C_Options](#c_options)) => string                               | -                                |
-| deepCopy          | -                     | 深拷贝                          | \<T>(data: T) => T                                                                       | -                                |
-| downloadFile      | -                     | 文件下载                        | (file: ArrayBuffer \| string, fileName?: string, signal?: AbortSignal) => Promise\<void> | string 为 http(s) 地址或本地地址 |
-| Equal             | ValEqual              | 判断值相等                      | <T = unknown>(obj1: T, obj2: T) => boolean                                               | -                                |
-|                   | TypeEqual             | 判断类型相同                    | <T = unknown>(obj1: T, obj2: T) => boolean                                               | -                                |
-|                   | ObjEqual              | 判断对象相等                    | <T = object>(obj1: T, obj2: T) => boolean                                                | -                                |
-| get_string_size   | -                     | 获取字符串大小                  | (str: string, font?: [Font](#font)) => { width: number; height: number }                 | -                                |
-|                   | get_string_size_async | 异步获取字符串大小              | (str: string, font?: [Font](#font)) => Promise<{ width: number; height: number }>        | -                                |
-| loadImage         | -                     | 异步加载图片并缓存              | (url: string) => Promise\<HTMLImageElement>                                              | -                                |
-| loadFont          | -                     | 异步加载字体                    | (options: [LoadFontOptions](#loadfontoptions)) => Promise\<void>                          | -                                |
-| RenderPDF         | load                  | 用于预加载 PDF                  | (pdfUrl: string) => Promise\<PDFDocumentProxy>                                           | -                                |
-|                   | getNumPages           | 获取 PDF 页数                   | (pdfUrl: string): Promise\<number>                                                       | -                                |
-|                   | clear                 | 删除已渲染的 PDF                | (containerId: string) => void                                                            | -                                |
-|                   | render                | 渲染 PDF                        | (options: [RenderOption](#renderoption)) => Promise\<void>                               | -                                |
-| Typeof            | -                     | 获取类型或判断类型              | \<T>(value: T, isType?: [Type](#type)) => boolean \| Type                                | -                                |
-| generateRandomStr | -                     | 生成随机字符串                  | (length:number) => string                                                                | -                                |
-| getTimeDifference | -                     | 获取时间差                      | (start: string, end: string) => [TimeDifference](#timedifference)                        | -                                |
+| 方法              | 子方法                | 说明                            | 类型                                                                                          | 备注                             |
+| ----------------- | --------------------- | ------------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------- |
+| array_is_includes | -                     | 判断一个数组是否包含另一个数组  | \<T>(arr1: Array\<T>, arr2: Array\<T>) => boolean                                             | -                                |
+| console_table     | -                     | 在控制台打印像 MySql 一样的表格 | (data: [ConsoleData](#consoledata), callBack?: (str: string) => void) => void                 | -                                |
+| ConvertNumbers    | toChineseNum          | 数字转中文                      | (num: number, options?: [C_Options](#c_options)) => string                                    | -                                |
+| deepCopy          | -                     | 深拷贝                          | \<T>(data: T) => T                                                                            | -                                |
+| downloadFile      | -                     | 文件下载                        | (file: ArrayBuffer \| string, fileName?: string, signal?: AbortSignal) => Promise\<void>      | string 为 http(s) 地址或本地地址 |
+| Equal             | ValEqual              | 判断值相等                      | <T = unknown>(obj1: T, obj2: T) => boolean                                                    | -                                |
+|                   | TypeEqual             | 判断类型相同                    | <T = unknown>(obj1: T, obj2: T) => boolean                                                    | -                                |
+|                   | ObjEqual              | 判断对象相等                    | <T = object>(obj1: T, obj2: T) => boolean                                                     | -                                |
+| get_string_size   | -                     | 获取字符串大小                  | (str: string, font?: [Font](#font)) => { width: number; height: number }                      | -                                |
+|                   | get_string_size_async | 异步获取字符串大小              | (str: string, font?: [Font](#font)) => Promise<{ width: number; height: number }>             | -                                |
+| loadImage         | -                     | 异步加载图片并缓存              | (url: string) => Promise\<HTMLImageElement>                                                   | -                                |
+| loadFont          | -                     | 异步加载字体                    | (options: [LoadFontOptions](#loadfontoptions)) => Promise\<void>                              | -                                |
+| RenderPDF         | load                  | 用于预加载 PDF                  | (pdfUrl: string) => Promise\<PDFDocumentProxy>                                                | -                                |
+|                   | getNumPages           | 获取 PDF 页数                   | (pdfUrl: string): Promise\<number>                                                            | -                                |
+|                   | clear                 | 删除已渲染的 PDF                | (containerId: string) => void                                                                 | -                                |
+|                   | render                | 渲染 PDF                        | (options: [RenderOption](#renderoption)) => Promise\<void>                                    | -                                |
+| Typeof            | -                     | 获取类型或判断类型              | \<T>(value: T, isType?: [Type](#type)) => boolean \| Type                                     | -                                |
+| generateRandomStr | -                     | 生成随机字符串                  | (length:number) => string                                                                     | -                                |
+| getTimeDifference | -                     | 获取时间差                      | (start: string, end: string) => [TimeDifference](#timedifference)                             | -                                |
+| getDateRange      | -                     | 获取日期范围                    | (options: [GetDateRangeOptions](#getdaterangeoptions)) => [DateRangeResult](#daterangeresult) | -                                |
 
 ## 类型
 
@@ -65,11 +66,11 @@ yarn add hsu-utils
 
 ### LoadFontOptions
 
-| 参数 | 说明                    | 类型                      | 默认值 | 备注 |
-| ---- | ----------------------- | ------------------------- | ------ | ---- |
-| ctx  | Canvas 上下文           | CanvasRenderingContext2D  | -      | -    |
-| font | 字体配置                | [Font](#font)             | -      | -    |
-| text | 文本内容                | string                    | -      | -    |
+| 参数 | 说明          | 类型                     | 默认值 | 备注 |
+| ---- | ------------- | ------------------------ | ------ | ---- |
+| ctx  | Canvas 上下文 | CanvasRenderingContext2D | -      | -    |
+| font | 字体配置      | [Font](#font)            | -      | -    |
+| text | 文本内容      | string                   | -      | -    |
 
 ### RenderOption
 
@@ -97,6 +98,38 @@ yarn add hsu-utils
 | minutes      | 相差分钟   | number | -      | -    |
 | seconds      | 相差秒数   | number | -      | -    |
 | milliseconds | 相差毫秒数 | number | -      | -    |
+
+### GetDateRangeOptions
+
+| 参数     | 说明                  | 类型                                 | 默认值 | 备注           |
+| -------- | --------------------- | ------------------------------------ | ------ | -------------- |
+| type     | 日期范围类型          | [DateRangeType](#daterangetype)      | -      | 必填           |
+| amount   | 数量（用于过去/未来） | number                               | 0      | -              |
+| baseDate | 基准日期              | string \| Date \| Dayjs              | -      | 默认为当前日期 |
+| unit     | 单位（用于过去/未来） | 'day' \| 'week' \| 'month' \| 'year' | 'day'  | -              |
+
+### DateRangeType
+
+> type DateRangeType = 'past' | 'future' | 'today' | 'thisWeek' | 'thisMonth' | 'thisQuarter' | 'thisYear'
+
+- `past` - 过去
+- `future` - 未来
+- `today` - 当日
+- `thisWeek` - 当周
+- `thisMonth` - 当月
+- `thisQuarter` - 当季
+- `thisYear` - 当年
+
+### DateRangeResult
+
+> type DateRangeResult = [string, string]
+
+返回时间段数组，格式根据类型和单位自动匹配：
+
+- `today` / `thisWeek` / `past`(day/week) / `future`(day/week) → `YYYY-MM-DD`
+- `thisMonth` / `past`(month) / `future`(month) → `YYYY-MM`
+- `thisQuarter` → `YYYY-[Q]Q` (例如: `2024-Q1`)
+- `thisYear` / `past`(year) / `future`(year) → `YYYY`
 
 ## License
 
