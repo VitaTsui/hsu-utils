@@ -101,12 +101,15 @@ yarn add hsu-utils
 
 ### GetDateRangeOptions
 
-| 参数     | 说明                  | 类型                                 | 默认值 | 备注           |
-| -------- | --------------------- | ------------------------------------ | ------ | -------------- |
-| type     | 日期范围类型          | [DateRangeType](#daterangetype)      | -      | 必填           |
-| amount   | 数量（用于过去/未来） | number                               | 0      | -              |
-| baseDate | 基准日期              | string \| Date \| Dayjs              | -      | 默认为当前日期 |
-| unit     | 单位（用于过去/未来） | 'day' \| 'week' \| 'month' \| 'year' | 'day'  | -              |
+| 参数     | 说明                  | 类型                                 | 默认值 | 备注                           |
+| -------- | --------------------- | ------------------------------------ | ------ | ------------------------------ |
+| type     | 日期范围类型          | [DateRangeType](#daterangetype)      | -      | 必填                           |
+| amount   | 数量（用于过去/未来） | number                               | 0      | -                              |
+| baseDate | 基准日期              | string \| Date \| Dayjs              | -      | 默认为当前日期                 |
+| unit     | 单位（用于过去/未来） | 'day' \| 'week' \| 'month' \| 'year' | 'day'  | -                              |
+| minDate  | 最小时间限制          | string \| Date \| Dayjs              | -      | 用于过去/未来，限制范围最小值 |
+| maxDate  | 最大时间限制          | string \| Date \| Dayjs              | -      | 用于过去/未来，限制范围最大值 |
+| hasTime  | 是否包含时间部分      | boolean                              | true   | 控制返回格式是否包含时间       |
 
 ### DateRangeType
 
@@ -126,10 +129,12 @@ yarn add hsu-utils
 
 返回时间段数组，格式根据类型和单位自动匹配：
 
-- `today` / `thisWeek` / `past`(day/week) / `future`(day/week) → `YYYY-MM-DD`
+- `today` / `thisWeek` / `past`(day/week) / `future`(day/week) → `YYYY-MM-DD` (hasTime 为 true 时: `YYYY-MM-DD HH:mm:ss`)
 - `thisMonth` / `past`(month) / `future`(month) → `YYYY-MM`
 - `thisQuarter` → `YYYY-[Q]Q` (例如: `2024-Q1`)
 - `thisYear` / `past`(year) / `future`(year) → `YYYY`
+
+注意：当 `hasTime` 为 `true`（默认）时，包含日期部分的格式会自动添加时间部分 `HH:mm:ss`。
 
 ## License
 
