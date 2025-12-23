@@ -27,7 +27,7 @@ export interface GetDateRangeOptions {
   minDate?: string | Date | Dayjs
   /** 最大时间（用于过去/未来，限制范围不能大于此时间） */
   maxDate?: string | Date | Dayjs
-  /** 是否包含时间部分，默认为 true */
+  /** 是否包含时间部分，默认为 false */
   hasTime?: boolean
 }
 
@@ -35,7 +35,7 @@ export interface GetDateRangeOptions {
 export type DateRangeResult = [string, string]
 
 /** 根据类型 / 单位获取对应的格式 */
-function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day', hasTime: boolean = true): string {
+function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day', hasTime: boolean = false): string {
   let baseFormat: string
 
   // 固定类型优先
@@ -76,7 +76,7 @@ function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day
   }
 
   // 如果 hasTime 为 true 且格式包含日期部分，则添加时间
-  if (hasTime && (baseFormat.includes('DD') || baseFormat === 'YYYY-MM-DD')) {
+  if (hasTime && baseFormat.includes('DD')) {
     return `${baseFormat} HH:mm:ss`
   }
 
@@ -96,7 +96,7 @@ export default function getDateRange(options: GetDateRangeOptions): DateRangeRes
     unit = 'day',
     minDate: minDateLimit,
     maxDate: maxDateLimit,
-    hasTime = true
+    hasTime = false
   } = options
   const base = baseDate ? dayjs(baseDate) : dayjs()
 
