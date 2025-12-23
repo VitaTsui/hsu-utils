@@ -109,7 +109,7 @@ yarn add hsu-utils
 | unit     | 单位（用于过去/未来） | 'day' \| 'week' \| 'month' \| 'year' | 'day'  | -                              |
 | minDate  | 最小时间限制          | string \| Date \| Dayjs              | -      | 用于过去/未来，限制范围最小值 |
 | maxDate  | 最大时间限制          | string \| Date \| Dayjs              | -      | 用于过去/未来，限制范围最大值 |
-| hasTime  | 是否包含时间部分      | boolean                              | true   | 控制返回格式是否包含时间       |
+| hasTime  | 是否包含时间部分      | boolean                              | false  | 控制返回格式是否包含时间       |
 
 ### DateRangeType
 
@@ -134,7 +134,7 @@ yarn add hsu-utils
 - `thisQuarter` → `YYYY-[Q]Q` (例如: `2024-Q1`)
 - `thisYear` / `past`(year) / `future`(year) → `YYYY`
 
-注意：当 `hasTime` 为 `true`（默认）时，包含日期部分的格式会自动添加时间部分 `HH:mm:ss`。
+注意：当 `hasTime` 为 `true` 时，包含日期部分的格式会自动添加时间部分 `HH:mm:ss`。默认 `hasTime` 为 `false`。
 
 ## License
 
