@@ -3,6 +3,11 @@ export default {
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
+  globals: {
+    'ts-jest': {
+      tsconfig: '<rootDir>/build/tsconfig.json'
+    }
+  },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest'
   },
@@ -15,6 +20,7 @@ export default {
     '/node_modules/',
     '/DownloadFile/',
     '/GetStrSize/',
+    '/LoadFont/',
     '/LoadImage/',
     '/RenderPDF/',
     '/GenerateRandomStr/'
