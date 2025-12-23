@@ -23,6 +23,7 @@ export default {
     '/LoadFont/',
     '/LoadImage/',
     '/RenderPDF/',
-    '/GenerateRandomStr/'
+    '/GenerateRandomStr/',
+    '/tools/index.ts'
   ]
 }

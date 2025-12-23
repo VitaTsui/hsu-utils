@@ -23,42 +23,64 @@ export interface GetDateRangeOptions {
   baseDate?: string | Date | Dayjs
   /** 单位（用于过去/未来），默认为 'day' */
   unit?: 'day' | 'week' | 'month' | 'year'
+  /** 最小时间（用于过去/未来，限制范围不能小于此时间） */
+  minDate?: string | Date | Dayjs
+  /** 最大时间（用于过去/未来，限制范围不能大于此时间） */
+  maxDate?: string | Date | Dayjs
+  /** 是否包含时间部分，默认为 true */
+  hasTime?: boolean
 }
 
 /** 时间段结果：[开始时间字符串, 结束时间字符串] */
 export type DateRangeResult = [string, string]
 
 /** 根据类型 / 单位获取对应的格式 */
-function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day'): string {
+function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day', hasTime: boolean = true): string {
+  let baseFormat: string
+
   // 固定类型优先
   switch (type) {
     case 'today':
-      return 'YYYY-MM-DD'
+      baseFormat = 'YYYY-MM-DD'
+      break
     case 'thisWeek':
-      return 'YYYY-MM-DD'
+      baseFormat = 'YYYY-MM-DD'
+      break
     case 'thisMonth':
-      return 'YYYY-MM'
+      baseFormat = 'YYYY-MM'
+      break
     case 'thisQuarter':
-      return 'YYYY-[Q]Q'
+      baseFormat = 'YYYY-[Q]Q'
+      break
     case 'thisYear':
-      return 'YYYY'
+      baseFormat = 'YYYY'
+      break
     case 'past':
     case 'future':
     default:
+      // 过去 / 未来等根据单位来决定
+      switch (unit) {
+        case 'year':
+          baseFormat = 'YYYY'
+          break
+        case 'month':
+          baseFormat = 'YYYY-MM'
+          break
+        case 'week':
+        case 'day':
+        default:
+          baseFormat = 'YYYY-MM-DD'
+          break
+      }
       break
   }
 
-  // 过去 / 未来等根据单位来决定
-  switch (unit) {
-    case 'year':
-      return 'YYYY'
-    case 'month':
-      return 'YYYY-MM'
-    case 'week':
-    case 'day':
-    default:
-      return 'YYYY-MM-DD'
+  // 如果 hasTime 为 true 且格式包含日期部分，则添加时间
+  if (hasTime && (baseFormat.includes('DD') || baseFormat === 'YYYY-MM-DD')) {
+    return `${baseFormat} HH:mm:ss`
   }
+
+  return baseFormat
 }
 
 /**
@@ -67,7 +89,15 @@ function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day
  * @returns 时间段数组 [min, max]
  */
 export default function getDateRange(options: GetDateRangeOptions): DateRangeResult {
-  const { type, amount = 0, baseDate, unit = 'day' } = options
+  const {
+    type,
+    amount = 0,
+    baseDate,
+    unit = 'day',
+    minDate: minDateLimit,
+    maxDate: maxDateLimit,
+    hasTime = true
+  } = options
   const base = baseDate ? dayjs(baseDate) : dayjs()
 
   let minDate: Dayjs
@@ -78,12 +108,40 @@ export default function getDateRange(options: GetDateRangeOptions): DateRangeRes
       // 过去：从 base - amount 到 base
       maxDate = base.endOf(unit)
       minDate = base.subtract(amount, unit).startOf(unit)
+      // 如果设置了最小时间限制，确保 minDate 不小于限制
+      if (minDateLimit) {
+        const minLimit = dayjs(minDateLimit).startOf(unit)
+        if (minLimit.isAfter(minDate)) {
+          minDate = minLimit
+        }
+      }
+      // 如果设置了最大时间限制，确保 maxDate 不大于限制
+      if (maxDateLimit) {
+        const maxLimit = dayjs(maxDateLimit).endOf(unit)
+        if (maxLimit.isBefore(maxDate)) {
+          maxDate = maxLimit
+        }
+      }
       break
 
     case 'future':
       // 未来：从 base 到 base + amount
       minDate = base.startOf(unit)
       maxDate = base.add(amount, unit).endOf(unit)
+      // 如果设置了最小时间限制，确保 minDate 不小于限制
+      if (minDateLimit) {
+        const minLimit = dayjs(minDateLimit).startOf(unit)
+        if (minLimit.isAfter(minDate)) {
+          minDate = minLimit
+        }
+      }
+      // 如果设置了最大时间限制，确保 maxDate 不大于限制
+      if (maxDateLimit) {
+        const maxLimit = dayjs(maxDateLimit).endOf(unit)
+        if (maxLimit.isBefore(maxDate)) {
+          maxDate = maxLimit
+        }
+      }
       break
 
     case 'today':
@@ -120,7 +178,7 @@ export default function getDateRange(options: GetDateRangeOptions): DateRangeRes
       throw new Error(`不支持的类型: ${type}`)
   }
 
-  const format = getFormat(type, unit)
+  const format = getFormat(type, unit, hasTime)
   const min = minDate.format(format)
   const max = maxDate.format(format)
 
