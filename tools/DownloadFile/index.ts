@@ -1,10 +1,27 @@
 import { Typeof } from '..'
 
 /**
- * 从 Content-Disposition 响应标头中解析文件名
+ * 支持的响应类型：Fetch API Response 或 Axios Response
  */
-export function getFileNameFromHeader(response: Response): string | null {
-  const contentDisposition = response.headers.get('Content-Disposition')
+type ResponseLike = Response | { headers: Record<string, string> | { get(name: string): string | null } }
+
+/**
+ * 从 Content-Disposition 响应标头中解析文件名
+ * 支持 Fetch API Response 和 Axios Response
+ */
+export function getFileNameFromHeader(response: ResponseLike): string | null {
+  // 获取 Content-Disposition 标头
+  let contentDisposition: string | null = null
+
+  if (response.headers && typeof response.headers.get === 'function') {
+    // Fetch API Response (headers 是 Headers 对象)
+    contentDisposition = response.headers.get('Content-Disposition')
+  } else if (response.headers && typeof response.headers === 'object') {
+    // Axios Response (headers 是普通对象)
+    const headers = response.headers as Record<string, string>
+    contentDisposition = headers['content-disposition'] || headers['Content-Disposition'] || null
+  }
+
   if (!contentDisposition) {
     return null
   }
