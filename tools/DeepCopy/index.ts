@@ -3,9 +3,9 @@ import { Typeof } from '..'
 type CommonObj<T = unknown> = Record<string, T>
 
 /**
- * 深拷贝
- * @param data
- * @returns
+ * Deep copy (supports plain objects, arrays, Date, FormData, Set, Map and other common types)
+ * @param data the data to copy
+ * @returns a new deep-copied value
  */
 export default function deepCopy<T>(data: T): T {
   if (Typeof(data) === 'date') {
@@ -48,7 +48,7 @@ export default function deepCopy<T>(data: T): T {
   if (Array.isArray(data)) {
     const newData = data.map((item) => {
       if (typeof item === 'object') {
-        return deepCopy(item) // 数组 | 对象
+        return deepCopy(item) // array | object
       } else {
         return item
       }
@@ -56,17 +56,17 @@ export default function deepCopy<T>(data: T): T {
 
     return newData as T
 
-    // 对象
+    // object
   } else if (data && Typeof(data) === 'object') {
     const _data = data as CommonObj
 
-    const newData: CommonObj = {} // 新对象
+    const newData: CommonObj = {} // new object
 
     Object.keys(_data).forEach((key) => {
       const _item = _data[key]
 
       if (typeof _item === 'object') {
-        newData[key] = deepCopy(_item) // 数组 | 对象
+        newData[key] = deepCopy(_item) // array | object
       } else {
         newData[key] = _item
       }

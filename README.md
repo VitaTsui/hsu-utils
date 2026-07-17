@@ -1,18 +1,30 @@
-# [Hsu Utils](https://github.com/VitaTsui/hsu-utils#hsu-utils)
+# hsu-utils
 
-## 前言
+[![npm version](https://img.shields.io/npm/v/hsu-utils.svg)](https://www.npmjs.com/package/hsu-utils)
+[![license](https://img.shields.io/npm/l/hsu-utils.svg)](./LICENSE)
 
-`hsu-utils` 一些前端的工具集
+常用前端工具集：深拷贝、类型判断、相等比较、文件下载、PDF 渲染、日期范围、控制台表格、字符串尺寸测量等，TypeScript 编写，零业务依赖。
 
 ## 安装
 
-```sh
-npm install --save hsu-utils
+```bash
+npm install hsu-utils
 # 或
 yarn add hsu-utils
 ```
 
-## 功能
+## 使用
+
+```ts
+import { deepCopy, Typeof, getDateRange, downloadFile } from "hsu-utils";
+
+const copy = deepCopy({ a: [1, 2, 3] });
+Typeof([], "array"); // true
+getDateRange({ type: "thisWeek", baseDate: "2026-07-17" }); // ['2026-07-12', '2026-07-18']（以周日为一周起点）
+await downloadFile("https://example.com/report.xlsx", "报表.xlsx");
+```
+
+## API 一览
 
 | 方法              | 子方法                | 说明                            | 类型                                                                                          | 备注                             |
 | ----------------- | --------------------- | ------------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------- |
@@ -77,9 +89,9 @@ yarn add hsu-utils
 | 参数         | 说明         | 类型   | 默认值 | 备注 |
 | ------------ | ------------ | ------ | ------ | ---- |
 | pdfUrl       | pdf 文件地址 | string | -      | 必填 |
-| containerId  | pdf 容器 id  | string | normal | 必填 |
-| startPageNum | 开始页码     | number | normal | -    |
-| endPageNum   | 结束页码     | number | normal | -    |
+| containerId  | pdf 容器 id  | string | -      | 必填 |
+| startPageNum | 开始页码     | number | -      | -    |
+| endPageNum   | 结束页码     | number | -      | -    |
 | pixelRatio   | 像素比例     | number | 2      | -    |
 | scale        | 缩放         | number | 1      | -    |
 
@@ -118,7 +130,7 @@ yarn add hsu-utils
 - `past` - 过去
 - `future` - 未来
 - `today` - 当日
-- `thisWeek` - 当周
+- `thisWeek` - 当周（以**周日**为一周起点）
 - `thisMonth` - 当月
 - `thisQuarter` - 当季
 - `thisYear` - 当年
@@ -137,6 +149,18 @@ yarn add hsu-utils
 
 注意：当 `hasTime` 为 `true` 时，包含日期部分的格式会自动添加时间部分 `HH:mm:ss`。默认 `hasTime` 为 `false`。时、分、秒单位固定返回 `YYYY-MM-DD HH:mm:ss` 格式。
 
+## 开发
+
+```bash
+yarn          # 安装依赖
+yarn build    # 构建 es/ + lib/ + dist/
+yarn test     # 运行单元测试
+```
+
+## 贡献
+
+日常开发在 `develop` 分支进行（feature 分支合入 `develop`），`main` 只接受来自 `develop` 的 PR；合入 `main` 后按 `package.json` 版本自动打 tag 并发布 npm。PR 标题遵循 [Conventional Commits](https://www.conventionalcommits.org/)。
+
 ## License
 
-MIT
+[MIT](./LICENSE) © VitaHsu

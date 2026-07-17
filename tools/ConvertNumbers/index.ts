@@ -4,6 +4,13 @@ export interface C_Options {
   benchmark?: number
   textType?: TextType
 }
+/**
+ * Convert a number to Chinese numerals
+ * @param num the number to convert
+ * @param options.benchmark multiplier (num is multiplied by this value before conversion)
+ * @param options.textType output style: 'lowercase' for lowercase numerals (一二三), 'uppercase' for uppercase numerals (壹贰叁); defaults to 'lowercase'
+ * @returns the Chinese numeral string
+ */
 export function toChineseNum(num: number, options: C_Options = {}) {
   const { benchmark, textType = 'lowercase' } = options
 
@@ -11,35 +18,35 @@ export function toChineseNum(num: number, options: C_Options = {}) {
     lowercase: ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'],
     uppercase: ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
   }
-  // 基本单位
+  // Basic units
   const cnIntRadice = {
     lowercase: ['', '十', '百', '千'],
     uppercase: ['', '拾', '佰', '仟']
   }
-  // 对应整数部分扩展单位
+  // Extended units for the integer part
   const cnIntUnits = {
     lowercase: ['', '万', '亿', '兆'],
     uppercase: ['', '萬', '億', '兆']
   }
-  // 最大处理的数字
+  // Maximum number that can be handled
   const maxNum = 9999999999999999.9999999999999999
-  // 整数部分
+  // Integer part
   let integerNum: string | undefined = undefined
-  // 小数部分
+  // Decimal part
   let decimalNum: string | undefined = undefined
-  // 输出的中文字符串
+  // Output Chinese string
   let chineseStr = ''
 
   if (benchmark) {
     num *= benchmark
   }
 
-  // 超出转换范围
+  // Out of conversion range
   if (num > maxNum) {
     return '超出转换范围'
   }
 
-  // 分割整数和小数
+  // Split into integer and decimal parts
   const moneyStr = num.toString()
   integerNum = moneyStr.split('.')[0]
   decimalNum = moneyStr.split('.')[1]

@@ -10,6 +10,12 @@ function countMap<T>(arr: Array<T>) {
   return map
 }
 
+/**
+ * Check whether one array contains another (whether the longer array contains all elements of the shorter one, including duplicate counts)
+ * @param arr1 first array
+ * @param arr2 second array
+ * @returns false if either array is empty; otherwise whether the longer array contains the shorter one
+ */
 export default function array_is_includes<T>(arr1: Array<T>, arr2: Array<T>) {
   if (arr1.length === 0 || arr2.length === 0) {
     return false

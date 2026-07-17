@@ -1,10 +1,10 @@
 import { Typeof, deepCopy } from '..'
 
 /**
- * 判断类型相等
- * @param obj1
- * @param obj2
- * @returns
+ * Check whether two values have the same type
+ * @param obj1 first value
+ * @param obj2 second value
+ * @returns true if the types are the same
  */
 export function TypeEqual<T = unknown>(obj1: T, obj2: T): boolean {
   let isEqual = false
@@ -19,15 +19,15 @@ export function TypeEqual<T = unknown>(obj1: T, obj2: T): boolean {
 }
 
 /**
- * 判断值相等
- * @param obj1
- * @param obj2
- * @returns
+ * Check whether two values are equal (null and undefined are treated as equal; objects / arrays are deep-compared)
+ * @param obj1 first value
+ * @param obj2 second value
+ * @returns true if equal
  */
 export function ValEqual<T = unknown>(obj1: T, obj2: T): boolean {
   let isEqual = false
 
-  // null 与 undefined 在值上相等
+  // null and undefined are equal by value
   if ((obj1 === null && obj2 === undefined) || (obj1 === undefined && obj2 === null)) {
     isEqual = true
   } else {
@@ -44,10 +44,10 @@ export function ValEqual<T = unknown>(obj1: T, obj2: T): boolean {
 }
 
 /**
- * 判断object相等
- * @param obj1
- * @param obj2
- * @returns
+ * Check whether two objects / arrays are equal (deep comparison; arrays are sorted before comparing, so element order is ignored)
+ * @param obj1 first object
+ * @param obj2 second object
+ * @returns true if equal
  */
 export function ObjEqual<T = object>(obj1: T, obj2: T): boolean {
   let isEqual = false

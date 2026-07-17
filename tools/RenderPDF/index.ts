@@ -22,6 +22,12 @@ interface RenderPageOption {
 
 const PDFMap = new Map<string, Promise<PDFDocumentProxy>>()
 
+/**
+ * Preload a PDF document (documents with the same pdfUrl are cached and reused)
+ * @param pdfUrl PDF file URL
+ * @param workerSrc custom pdf.js worker URL; defaults to the built-in CDN
+ * @returns the pdf.js PDFDocumentProxy
+ */
 async function load(pdfUrl: string, workerSrc?: string) {
   if (workerSrc) {
     GlobalWorkerOptions.workerSrc = workerSrc
@@ -44,12 +50,21 @@ async function load(pdfUrl: string, workerSrc?: string) {
   return await pdf
 }
 
+/**
+ * Get the total number of pages in a PDF
+ * @param pdfUrl PDF file URL
+ * @param workerSrc custom pdf.js worker URL
+ */
 async function getNumPages(pdfUrl: string, workerSrc?: string) {
   const pdf = await load(pdfUrl, workerSrc)
 
   return pdf.numPages
 }
 
+/**
+ * Clear the rendered PDF pages inside the container
+ * @param containerId id of the container element
+ */
 function clear(containerId: string) {
   const container = document.getElementById(containerId)
 
@@ -60,6 +75,16 @@ function clear(containerId: string) {
   })
 }
 
+/**
+ * Render a PDF into the given container (clears existing pages in the container first, then renders each page as a canvas)
+ * @param options.pdfUrl PDF file URL
+ * @param options.containerId id of the container element
+ * @param options.startPageNum start page number, defaults to page 1
+ * @param options.endPageNum end page number, defaults to the last page
+ * @param options.pixelRatio rendering pixel ratio, defaults to 2
+ * @param options.scale scale factor, defaults to 1
+ * @param options.workerSrc custom pdf.js worker URL
+ */
 async function render({ pdfUrl, containerId, startPageNum, endPageNum, pixelRatio, scale, workerSrc }: RenderOption) {
   clear(containerId)
 
