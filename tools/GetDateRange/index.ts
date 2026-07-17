@@ -6,39 +6,39 @@ dayjs.extend(quarterOfYear)
 dayjs.extend(weekOfYear)
 
 export type DateRangeType =
-  | 'past' // 过去
-  | 'future' // 未来
-  | 'today' // 当日
-  | 'thisWeek' // 当周
-  | 'thisMonth' // 当月
-  | 'thisQuarter' // 当季
-  | 'thisYear' // 当年
+  | 'past' // past
+  | 'future' // future
+  | 'today' // today
+  | 'thisWeek' // this week
+  | 'thisMonth' // this month
+  | 'thisQuarter' // this quarter
+  | 'thisYear' // this year
 
 export interface GetDateRangeOptions {
-  /** 数量（用于过去/未来，表示天数、周数、月数等） */
+  /** Amount (for past/future; number of days, weeks, months, etc.) */
   amount?: number
-  /** 类型：过去、未来、当月、当日、当年、当季、当周等 */
+  /** Type: past, future, this month, today, this year, this quarter, this week, etc. */
   type: DateRangeType
-  /** 基准日期，默认为当前日期 */
+  /** Base date, defaults to the current date */
   baseDate?: string | Date | Dayjs
-  /** 单位（用于过去/未来），默认为 'day' */
+  /** Unit (for past/future), defaults to 'day' */
   unit?: 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year'
-  /** 最小时间（用于过去/未来，限制范围不能小于此时间） */
+  /** Minimum date (for past/future; the range cannot go earlier than this) */
   minDate?: string | Date | Dayjs
-  /** 最大时间（用于过去/未来，限制范围不能大于此时间） */
+  /** Maximum date (for past/future; the range cannot go later than this) */
   maxDate?: string | Date | Dayjs
-  /** 是否包含时间部分，默认为 false */
+  /** Whether to include the time part, defaults to false */
   hasTime?: boolean
 }
 
-/** 时间段结果：[开始时间字符串, 结束时间字符串] */
+/** Date range result: [start time string, end time string] */
 export type DateRangeResult = [string, string]
 
-/** 根据类型 / 单位获取对应的格式 */
+/** Get the corresponding format string based on type / unit */
 function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day', hasTime: boolean = false): string {
   let baseFormat: string
 
-  // 固定类型优先
+  // Fixed types take precedence
   switch (type) {
     case 'today':
       baseFormat = 'YYYY-MM-DD'
@@ -58,7 +58,7 @@ function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day
     case 'past':
     case 'future':
     default:
-      // 过去 / 未来等根据单位来决定
+      // For past / future etc., the format is decided by the unit
       switch (unit) {
         case 'year':
           baseFormat = 'YYYY'
@@ -69,7 +69,7 @@ function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day
         case 'second':
         case 'minute':
         case 'hour':
-          // 时、分、秒单位直接返回完整的时间格式
+          // For hour, minute and second units, return the full datetime format directly
           return 'YYYY-MM-DD HH:mm:ss'
         case 'week':
         case 'day':
@@ -80,7 +80,7 @@ function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day
       break
   }
 
-  // 如果 hasTime 为 true 且格式包含日期部分，则添加时间
+  // If hasTime is true and the format contains a date part, append the time
   if (hasTime && baseFormat.endsWith('DD')) {
     return `${baseFormat} HH:mm:ss`
   }
@@ -89,9 +89,9 @@ function getFormat(type: DateRangeType, unit: GetDateRangeOptions['unit'] = 'day
 }
 
 /**
- * 获取日期范围
- * @param options 配置选项
- * @returns 时间段数组 [min, max]
+ * Get a date range
+ * @param options configuration options
+ * @returns date range array [min, max]
  */
 export default function getDateRange(options: GetDateRangeOptions): DateRangeResult {
   const {
@@ -110,17 +110,17 @@ export default function getDateRange(options: GetDateRangeOptions): DateRangeRes
 
   switch (type) {
     case 'past':
-      // 过去：从 base - amount 到 base
+      // Past: from base - amount to base
       maxDate = base.endOf(unit)
       minDate = base.subtract(amount, unit).startOf(unit)
-      // 如果设置了最小时间限制，确保 minDate 不小于限制
+      // If a minimum date limit is set, make sure minDate is not earlier than it
       if (minDateLimit) {
         const minLimit = dayjs(minDateLimit).startOf(unit)
         if (minLimit.isAfter(minDate)) {
           minDate = minLimit
         }
       }
-      // 如果设置了最大时间限制，确保 maxDate 不大于限制
+      // If a maximum date limit is set, make sure maxDate is not later than it
       if (maxDateLimit) {
         const maxLimit = dayjs(maxDateLimit).endOf(unit)
         if (maxLimit.isBefore(maxDate)) {
@@ -130,17 +130,17 @@ export default function getDateRange(options: GetDateRangeOptions): DateRangeRes
       break
 
     case 'future':
-      // 未来：从 base 到 base + amount
+      // Future: from base to base + amount
       minDate = base.startOf(unit)
       maxDate = base.add(amount, unit).endOf(unit)
-      // 如果设置了最小时间限制，确保 minDate 不小于限制
+      // If a minimum date limit is set, make sure minDate is not earlier than it
       if (minDateLimit) {
         const minLimit = dayjs(minDateLimit).startOf(unit)
         if (minLimit.isAfter(minDate)) {
           minDate = minLimit
         }
       }
-      // 如果设置了最大时间限制，确保 maxDate 不大于限制
+      // If a maximum date limit is set, make sure maxDate is not later than it
       if (maxDateLimit) {
         const maxLimit = dayjs(maxDateLimit).endOf(unit)
         if (maxLimit.isBefore(maxDate)) {
@@ -150,31 +150,31 @@ export default function getDateRange(options: GetDateRangeOptions): DateRangeRes
       break
 
     case 'today':
-      // 当日：当天的开始到结束
+      // Today: from the start to the end of the current day
       minDate = base.startOf('day')
       maxDate = base.endOf('day')
       break
 
     case 'thisWeek':
-      // 当周：本周的开始到结束
+      // This week: from the start to the end of the current week
       minDate = base.startOf('week')
       maxDate = base.endOf('week')
       break
 
     case 'thisMonth':
-      // 当月：本月的开始到结束
+      // This month: from the start to the end of the current month
       minDate = base.startOf('month')
       maxDate = base.endOf('month')
       break
 
     case 'thisQuarter':
-      // 当季：本季度的开始到结束
+      // This quarter: from the start to the end of the current quarter
       minDate = base.startOf('quarter')
       maxDate = base.endOf('quarter')
       break
 
     case 'thisYear':
-      // 当年：本年的开始到结束
+      // This year: from the start to the end of the current year
       minDate = base.startOf('year')
       maxDate = base.endOf('year')
       break

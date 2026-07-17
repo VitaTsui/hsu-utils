@@ -1,13 +1,20 @@
-// 图片阻塞请求缓存
+// Cache of in-flight image requests
 const imagePromiseCache: { [key: string]: Promise<HTMLImageElement> | undefined } = {}
 
-// 图片缓存
+// Cache of loaded images
 const imageCache: { [key: string]: HTMLImageElement } = {}
 
+/**
+ * Asynchronously load an image with caching
+ *
+ * Results for the same url are cached and reused on subsequent calls; in-flight requests are also merged to avoid duplicate concurrent requests.
+ * @param url image URL
+ * @returns the loaded HTMLImageElement (rejects on load failure, with no error value)
+ */
 export default async function loadImage(url: string) {
-  // 如果图片已经请求过了，则直接返回缓存
+  // If the image has already been loaded, return the cached one directly
   if (imageCache[url]) return imageCache[url]
-  // 如果图片正在请求中，则返回请求中的图片
+  // If the image is currently being requested, return the pending request
   if (imagePromiseCache[url]) return imagePromiseCache[url] as Promise<HTMLImageElement>
 
   const imagePromise = new Promise<HTMLImageElement>((resolve, reject) => {

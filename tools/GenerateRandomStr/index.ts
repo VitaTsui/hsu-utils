@@ -1,3 +1,8 @@
+/**
+ * Generate a random string of the given length (uppercase and lowercase English letters only)
+ * @param length length of the string
+ * @returns the random string
+ */
 export default function generateRandomStr(length: number): string {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
   let result = ''

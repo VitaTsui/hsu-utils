@@ -1,23 +1,25 @@
 import { Typeof } from '..'
 
 /**
- * 支持的响应类型：Fetch API Response 或 Axios Response
+ * Supported response types: Fetch API Response or Axios Response
  */
 type ResponseLike = Response | { headers: Record<string, string> | { get(name: string): string | null } }
 
 /**
- * 从 Content-Disposition 响应标头中解析文件名
- * 支持 Fetch API Response 和 Axios Response
+ * Parse the file name from the Content-Disposition response header
+ * Supports Fetch API Response and Axios Response
+ * @param response the response object
+ * @returns the parsed file name, or null if it cannot be parsed
  */
 export function getFileNameFromHeader(response: ResponseLike): string | null {
-  // 获取 Content-Disposition 标头
+  // Get the Content-Disposition header
   let contentDisposition: string | null = null
 
   if (response.headers && typeof response.headers.get === 'function') {
-    // Fetch API Response (headers 是 Headers 对象)
+    // Fetch API Response (headers is a Headers object)
     contentDisposition = response.headers.get('Content-Disposition')
   } else if (response.headers && typeof response.headers === 'object') {
-    // Axios Response (headers 是普通对象)
+    // Axios Response (headers is a plain object)
     const headers = response.headers as Record<string, string>
     contentDisposition = headers['content-disposition'] || headers['Content-Disposition'] || null
   }
@@ -26,13 +28,13 @@ export function getFileNameFromHeader(response: ResponseLike): string | null {
     return null
   }
 
-  // 尝试匹配 filename*=UTF-8''example.pdf 格式（RFC 5987）
+  // Try to match the filename*=UTF-8''example.pdf format (RFC 5987)
   const filenameStarMatch = contentDisposition.match(/filename\*=UTF-8''([^;]+)/i)
   if (filenameStarMatch) {
     return decodeURIComponent(filenameStarMatch[1])
   }
 
-  // 尝试匹配 filename="example.pdf" 或 filename=example.pdf 格式
+  // Try to match the filename="example.pdf" or filename=example.pdf format
   const filenameMatch = contentDisposition.match(/filename=["']?([^;"']+)["']?/i)
   if (filenameMatch) {
     return decodeURIComponent(filenameMatch[1])
@@ -45,7 +47,7 @@ async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortS
   try {
     const response = await fetch(url, { signal })
 
-    // 如果没有传入文件名，尝试从响应标头中获取
+    // If no file name was provided, try to get it from the response header
     let finalFileName = fileName
     if (!finalFileName) {
       finalFileName = getFileNameFromHeader(response) || undefined
@@ -66,6 +68,12 @@ async function downloadFileByUrl(url: string, fileName?: string, signal?: AbortS
   }
 }
 
+/**
+ * Download a file
+ * @param file file content (ArrayBuffer / Blob), or an http(s) URL / local path (string)
+ * @param fileName name to save the file as; when downloading by URL it is inferred from the response header / URL if omitted
+ * @param signal optional AbortSignal to cancel the request when downloading by URL
+ */
 export default async function downloadFile(
   file: ArrayBuffer | Blob | string,
   fileName?: string,

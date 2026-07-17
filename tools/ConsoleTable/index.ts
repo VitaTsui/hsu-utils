@@ -6,7 +6,7 @@ const HIGH = '|'
 const SPACE = ' '
 const EMPTY = ''
 
-// 获取字符串的占位长度
+// Get the display width of a string
 function get_string_width(str: string): number {
   let width = 0
   for (const char of str) {
@@ -16,7 +16,7 @@ function get_string_width(str: string): number {
   return width
 }
 
-// 边框长度
+// Generate a horizontal border segment of the given width
 function get_egde(width: number) {
   let edge = ''
   for (let i = 0; i <= width; i++) {
@@ -25,7 +25,7 @@ function get_egde(width: number) {
   return edge
 }
 
-// 生成边框
+// Generate a border row
 function get_edge(widths: number[], no_line_break: boolean = false) {
   const col_num = widths.length
   let border = ''
@@ -41,7 +41,7 @@ function get_edge(widths: number[], no_line_break: boolean = false) {
   return border
 }
 
-// 占位
+// Generate whitespace padding of the given width
 function get_space(width: number): string {
   let space = ''
   for (let i = 0; i <= width; i++) {
@@ -50,7 +50,7 @@ function get_space(width: number): string {
   return space
 }
 
-// 写入数据
+// Write a data row
 function wirte_data(widths: number[], data: (string | number)[]): string {
   const col_num = widths.length
   let content = ''
@@ -75,7 +75,7 @@ function wirte_data(widths: number[], data: (string | number)[]): string {
   return content
 }
 
-// 获取数据的最大占位长度
+// Get the maximum display width of each column
 function get_max_widths(data: ConsoleData): number[] {
   let max_widths = Object.keys(data[0]).map((v) => +v)
 
@@ -88,7 +88,11 @@ function get_max_widths(data: ConsoleData): number[] {
   return max_widths
 }
 
-// 打印表格通用方法
+/**
+ * Print a MySQL-client-style table to the console
+ * @param data 2D array; the first row is the header
+ * @param callBack optional callback that receives the assembled table string (for custom output)
+ */
 export default function console_table(data: ConsoleData, callBack?: (str: string) => void) {
   const row_num = data.length
   const max_widths = get_max_widths(data)

@@ -154,7 +154,7 @@ describe('getDateRange', () => {
   })
 
   test('传入不支持的类型时抛出错误', () => {
-    // @ts-expect-error: 强制传入非法类型以测试错误分支
+    // @ts-expect-error: force an invalid type to test the error branch
     expect(() => getDateRange({ type: 'invalid' })).toThrow('不支持的类型')
   })
 

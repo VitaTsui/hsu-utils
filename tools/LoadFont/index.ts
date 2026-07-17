@@ -11,6 +11,12 @@ export interface LoadFontOptions {
   text?: string
 }
 
+/**
+ * Asynchronously load a font, ensuring it is available for subsequent canvas drawing / size measurement
+ * @param options.ctx canvas context used for warm-up; an internal off-screen canvas is used if omitted
+ * @param options.font font configuration (style / weight / size / family)
+ * @param options.text warm-up text
+ */
 export default async function loadFont(options: LoadFontOptions) {
   const { ctx, font = {}, text } = options
   const { style = 'normal', weight = 'normal', size = 10, family = 'sans-serif' } = font
