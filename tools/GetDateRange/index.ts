@@ -1,9 +1,12 @@
 import dayjs, { Dayjs } from 'dayjs'
 import quarterOfYear from 'dayjs/plugin/quarterOfYear'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+// advancedFormat supplies the `Q` format token; without it `YYYY-[Q]Q` renders as `YYYY-QQ`
+import advancedFormat from 'dayjs/plugin/advancedFormat'
 
 dayjs.extend(quarterOfYear)
 dayjs.extend(weekOfYear)
+dayjs.extend(advancedFormat)
 
 export type DateRangeType =
   | 'past' // past

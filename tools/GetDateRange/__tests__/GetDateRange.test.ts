@@ -28,11 +28,19 @@ describe('getDateRange', () => {
   })
 
   test('获取当季范围', () => {
-    const [min, max] = getDateRange({ type: 'thisQuarter' })
-    const today = dayjs()
+    // Assert literal values against a fixed base date, so a broken `Q` token
+    // (e.g. missing advancedFormat plugin rendering "2024-QQ") fails the test
+    const [min, max] = getDateRange({ type: 'thisQuarter', baseDate: '2024-03-20' })
 
-    expect(min).toBe(today.startOf('quarter').format('YYYY-[Q]Q'))
-    expect(max).toBe(today.endOf('quarter').format('YYYY-[Q]Q'))
+    expect(min).toBe('2024-Q1')
+    expect(max).toBe('2024-Q1')
+  })
+
+  test('获取当季范围（跨季度字面值）', () => {
+    const [min, max] = getDateRange({ type: 'thisQuarter', baseDate: '2026-07-17' })
+
+    expect(min).toBe('2026-Q3')
+    expect(max).toBe('2026-Q3')
   })
 
   test('获取当年范围', () => {
@@ -334,8 +342,8 @@ describe('getDateRange', () => {
     })
 
     const [min, max] = result
-    expect(min).toBe(baseDate.startOf('quarter').format('YYYY-[Q]Q'))
-    expect(max).toBe(baseDate.endOf('quarter').format('YYYY-[Q]Q'))
+    expect(min).toBe('2024-Q1')
+    expect(max).toBe('2024-Q1')
   })
 
   test('过去类型使用最小时间限制', () => {
