@@ -1,6 +1,6 @@
 {
   "name": "hsu-utils",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "常用前端工具集：深拷贝、类型判断、相等比较、文件下载、PDF 渲染、日期范围、控制台表格等",
   "keywords": [
     "utils",
