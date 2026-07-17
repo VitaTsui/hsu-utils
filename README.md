@@ -20,7 +20,7 @@ import { deepCopy, Typeof, getDateRange, downloadFile } from "hsu-utils";
 
 const copy = deepCopy({ a: [1, 2, 3] });
 Typeof([], "array"); // true
-getDateRange({ type: "thisWeek" }); // ['2026-07-13', '2026-07-19']
+getDateRange({ type: "thisWeek", baseDate: "2026-07-17" }); // ['2026-07-12', '2026-07-18']（以周日为一周起点）
 await downloadFile("https://example.com/report.xlsx", "报表.xlsx");
 ```
 
@@ -130,7 +130,7 @@ await downloadFile("https://example.com/report.xlsx", "报表.xlsx");
 - `past` - 过去
 - `future` - 未来
 - `today` - 当日
-- `thisWeek` - 当周
+- `thisWeek` - 当周（以**周日**为一周起点）
 - `thisMonth` - 当月
 - `thisQuarter` - 当季
 - `thisYear` - 当年
