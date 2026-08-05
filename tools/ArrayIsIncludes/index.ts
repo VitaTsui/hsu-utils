@@ -1,4 +1,4 @@
-import { Equal } from '..'
+import Equal from '../Equal'
 
 function countMap<T>(arr: Array<T>) {
   const map = new Map()

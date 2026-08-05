@@ -1,4 +1,4 @@
-import { loadFont } from '..'
+import loadFont from '../LoadFont'
 
 interface Font {
   style?: string

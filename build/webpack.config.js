@@ -13,6 +13,11 @@ const config = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: devMode ? 'hsu-utils.js' : 'hsu-utils.min.js',
+    // RenderPDF 里的 pdfjs 是动态 import，UMD 产物会因此多出一个按需 chunk。
+    // 'auto' 让 webpack 运行时从 document.currentScript 推导出 chunk 的基地址，
+    // 否则 <script> 直接引 dist/ 时会去站点根目录找那个 chunk 而 404。
+    publicPath: 'auto',
+    chunkFilename: devMode ? 'hsu-utils.[name].js' : 'hsu-utils.[name].min.js',
     globalObject: 'this',
     library: 'hsu-utils',
     libraryTarget: 'umd'

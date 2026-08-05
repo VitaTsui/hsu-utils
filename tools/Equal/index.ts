@@ -1,4 +1,5 @@
-import { Typeof, deepCopy } from '..'
+import Typeof from '../Typeof'
+import deepCopy from '../DeepCopy'
 
 /**
  * Check whether two values have the same type

@@ -1,4 +1,4 @@
-import { Typeof } from '..'
+import Typeof from '../Typeof'
 
 /**
  * Supported response types: Fetch API Response or Axios Response
