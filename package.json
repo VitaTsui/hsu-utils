@@ -1,6 +1,6 @@
 {
   "name": "hsu-utils",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "description": "常用前端工具集：深拷贝、类型判断、相等比较、文件下载、PDF 渲染、日期范围、控制台表格等",
   "keywords": [
     "utils",
@@ -29,11 +29,7 @@
     "README.md",
     "LICENSE"
   ],
-  "sideEffects": [
-    "es/*",
-    "lib/*",
-    "dist/*"
-  ],
+  "sideEffects": false,
   "scripts": {
     "build": "yarn build:es && yarn build:cjs && rimraf dist && yarn build:umd",
     "build:es": "rimraf es && tsc -p build/tsconfig.es.json",

@@ -1,6 +1,44 @@
-import { GlobalWorkerOptions, getDocument } from 'pdfjs-dist/legacy/build/pdf.js'
-import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/src/display/api'
-GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.worker.min.js'
+import type { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/src/display/api'
+
+const DEFAULT_WORKER_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.worker.min.js'
+
+type PdfjsModule = typeof import('pdfjs-dist/legacy/build/pdf.js')
+
+/**
+ * pdfjs 按需加载。
+ *
+ * pdfjs-dist 约 374 KB（未压缩），而 RenderPDF 只是 hsu-utils barrel 里的一个导出。
+ * 从前它在模块顶层 `import` pdfjs、并且立刻给 GlobalWorkerOptions.workerSrc 赋值
+ * （模块级副作用），于是：
+ *
+ *   1. 消费方只要从 hsu-utils import 任何东西（`array_is_includes` 这类到处在用），
+ *      barrel 静态引入 RenderPDF，pdfjs 就跟着进首屏；
+ *   2. 那句模块级赋值让这个模块无法被标记为无副作用，tree-shaking 也救不回来。
+ *
+ * 改成用到时才动态 import，并把 workerSrc 的设置挪进加载回调——模块本身不再有副作用。
+ * 实测：某后台项目首屏因此减少约 374 KB（未压缩）。
+ */
+let pdfjsPromise: Promise<PdfjsModule> | undefined
+/** 调用方在 pdfjs 加载完成前指定的 workerSrc，加载后立即应用 */
+let preferredWorkerSrc: string | undefined
+
+function loadPdfjs(): Promise<PdfjsModule> {
+  if (!pdfjsPromise) {
+    pdfjsPromise = import('pdfjs-dist/legacy/build/pdf.js')
+      .then((mod) => {
+        // pdfjs 的 legacy 产物在不同 interop 下可能是模块本身或 { default: 模块 }
+        const m = mod as PdfjsModule & { default?: PdfjsModule }
+        const pdfjs = m.default ?? m
+        pdfjs.GlobalWorkerOptions.workerSrc = preferredWorkerSrc ?? DEFAULT_WORKER_SRC
+        return pdfjs
+      })
+      .catch((err) => {
+        pdfjsPromise = undefined
+        throw err
+      })
+  }
+  return pdfjsPromise
+}
 
 interface RenderOption {
   pdfUrl: string
@@ -30,13 +68,20 @@ const PDFMap = new Map<string, Promise<PDFDocumentProxy>>()
  */
 async function load(pdfUrl: string, workerSrc?: string) {
   if (workerSrc) {
-    GlobalWorkerOptions.workerSrc = workerSrc
+    preferredWorkerSrc = workerSrc
+  }
+
+  const pdfjs = await loadPdfjs()
+
+  // pdfjs 已经加载过时，上面的回调不会再跑，这里补设一次
+  if (workerSrc) {
+    pdfjs.GlobalWorkerOptions.workerSrc = workerSrc
   }
 
   let pdf = PDFMap.get(pdfUrl)
 
   if (!pdf) {
-    const loadingTask = getDocument({
+    const loadingTask = pdfjs.getDocument({
       url: pdfUrl,
       cMapUrl: 'https://unpkg.com/browse/pdfjs-dist@2.13.216/cmaps/',
       cMapPacked: true

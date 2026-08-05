@@ -1,4 +1,4 @@
-import { Typeof } from '..'
+import Typeof from '../Typeof'
 
 type CommonObj<T = unknown> = Record<string, T>
 

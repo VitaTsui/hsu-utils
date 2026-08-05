@@ -6,7 +6,7 @@ import get_string_size, { get_string_size_async } from './GetStrSize'
 import ConvertNumbers from './ConvertNumbers'
 import loadImage from './LoadImage'
 import RenderPDF from './RenderPDF'
-import downloadFile from './DownloadFile'
+import downloadFile, { getFileNameFromHeader } from './DownloadFile'
 import array_is_includes from './ArrayIsIncludes'
 import generateRandomStr from './GenerateRandomStr'
 import getTimeDifference from './GetTimeDifference'
@@ -24,6 +24,7 @@ export {
   loadImage,
   RenderPDF,
   downloadFile,
+  getFileNameFromHeader,
   array_is_includes,
   generateRandomStr,
   getTimeDifference,
